@@ -1,0 +1,111 @@
+{
+    "name": "mfeGarage",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "prefix": "app",
+    "sourceRoot": "apps/mfe-garage/src",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/angular:webpack-browser",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/mfe-garage",
+                "index": "apps/mfe-garage/src/index.html",
+                "main": "apps/mfe-garage/src/main.ts",
+                "tsConfig": "apps/mfe-garage/tsconfig.app.json",
+                "assets": [
+                    {
+                        "glob": "**/*",
+                        "input": "apps/mfe-garage/public"
+                    }
+                ],
+                "styles": ["apps/mfe-garage/src/styles.css"],
+                "customWebpackConfig": {
+                    "path": "apps/mfe-garage/webpack.config.ts"
+                }
+            },
+            "configurations": {
+                "production": {
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "500kb",
+                            "maximumError": "1mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "4kb",
+                            "maximumError": "8kb"
+                        }
+                    ],
+                    "outputHashing": "all",
+                    "customWebpackConfig": {
+                        "path": "apps/mfe-garage/webpack.prod.config.ts"
+                    }
+                },
+                "development": {
+                    "buildOptimizer": false,
+                    "optimization": false,
+                    "vendorChunk": true,
+                    "extractLicenses": false,
+                    "sourceMap": true,
+                    "namedChunks": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve": {
+            "continuous": true,
+            "executor": "@nx/angular:dev-server",
+            "options": {
+                "port": 4201,
+                "publicHost": "http://localhost:4201"
+            },
+            "configurations": {
+                "production": {
+                    "buildTarget": "mfeGarage:build:production"
+                },
+                "development": {
+                    "buildTarget": "mfeGarage:build:development"
+                }
+            },
+            "defaultConfiguration": "development",
+            "dependsOn": ["shell:serve"]
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "buildTarget": "mfeGarage:build"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint"
+        },
+        "test": {
+            "executor": "@nx/vitest:test",
+            "outputs": ["{options.reportsDirectory}"],
+            "options": {
+                "reportsDirectory": "../../coverage/apps/mfe-garage"
+            }
+        },
+        "serve-static": {
+            "continuous": true,
+            "executor": "@nx/web:file-server",
+            "defaultConfiguration": "production",
+            "options": {
+                "buildTarget": "mfeGarage:build",
+                "port": 4201,
+                "watch": false
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "mfeGarage:build:development"
+                },
+                "production": {
+                    "buildTarget": "mfeGarage:build:production"
+                }
+            }
+        }
+    }
+}

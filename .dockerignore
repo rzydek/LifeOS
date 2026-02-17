@@ -1,0 +1,12 @@
+node_modules
+.git
+.idea
+.vscode
+apps/*/node_modules
+apps/*/dist
+apps/*/tmp
+dist/apps/shell
+dist/apps/mfe-*
+dist/apps/*-e2e
+coverage
+tmp

@@ -1,0 +1,111 @@
+{
+    "name": "mfeFamily",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "prefix": "app",
+    "sourceRoot": "apps/mfe-family/src",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/angular:webpack-browser",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/mfe-family",
+                "index": "apps/mfe-family/src/index.html",
+                "main": "apps/mfe-family/src/main.ts",
+                "tsConfig": "apps/mfe-family/tsconfig.app.json",
+                "assets": [
+                    {
+                        "glob": "**/*",
+                        "input": "apps/mfe-family/public"
+                    }
+                ],
+                "styles": ["apps/mfe-family/src/styles.css"],
+                "customWebpackConfig": {
+                    "path": "apps/mfe-family/webpack.config.ts"
+                }
+            },
+            "configurations": {
+                "production": {
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "500kb",
+                            "maximumError": "1mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "4kb",
+                            "maximumError": "8kb"
+                        }
+                    ],
+                    "outputHashing": "all",
+                    "customWebpackConfig": {
+                        "path": "apps/mfe-family/webpack.prod.config.ts"
+                    }
+                },
+                "development": {
+                    "buildOptimizer": false,
+                    "optimization": false,
+                    "vendorChunk": true,
+                    "extractLicenses": false,
+                    "sourceMap": true,
+                    "namedChunks": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve": {
+            "continuous": true,
+            "executor": "@nx/angular:dev-server",
+            "options": {
+                "port": 4202,
+                "publicHost": "http://localhost:4202"
+            },
+            "configurations": {
+                "production": {
+                    "buildTarget": "mfeFamily:build:production"
+                },
+                "development": {
+                    "buildTarget": "mfeFamily:build:development"
+                }
+            },
+            "defaultConfiguration": "development",
+            "dependsOn": ["shell:serve"]
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "buildTarget": "mfeFamily:build"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint"
+        },
+        "test": {
+            "executor": "@nx/vitest:test",
+            "outputs": ["{options.reportsDirectory}"],
+            "options": {
+                "reportsDirectory": "../../coverage/apps/mfe-family"
+            }
+        },
+        "serve-static": {
+            "continuous": true,
+            "executor": "@nx/web:file-server",
+            "defaultConfiguration": "production",
+            "options": {
+                "buildTarget": "mfeFamily:build",
+                "port": 4202,
+                "watch": false
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "mfeFamily:build:development"
+                },
+                "production": {
+                    "buildTarget": "mfeFamily:build:production"
+                }
+            }
+        }
+    }
+}

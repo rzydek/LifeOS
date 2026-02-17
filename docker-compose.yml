@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  # --- Infrastructure ---
+
+  traefik:
+    image: traefik:v2.10
+    container_name: lifeos-traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080" # Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - lifeos-net
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: lifeos-postgres
+    environment:
+      POSTGRES_USER: lifeos
+      POSTGRES_PASSWORD: lifeos_password
+      POSTGRES_DB: lifeos_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - lifeos-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: lifeos-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - lifeos-net
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: lifeos-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - lifeos-net
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: lifeos-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - lifeos-net
+
+  # --- Backend Services ---
+
+  nest-core:
+    build:
+      context: .
+      dockerfile: apps/nest-core/Dockerfile
+    container_name: lifeos-nest-core
+    environment:
+      - DATABASE_URL=postgresql://lifeos:lifeos_password@postgres:5432/lifeos_db
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nest-core.rule=Host(`api.lifeos.localhost`)"
+    networks:
+      - lifeos-net
+
+  go-monitor:
+    build:
+      context: ./apps/go-monitor
+      dockerfile: Dockerfile
+    container_name: lifeos-go-monitor
+    depends_on:
+      - redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.go-monitor.rule=Host(`monitor.lifeos.localhost`)"
+    networks:
+      - lifeos-net
+
+  py-worker:
+    build:
+      context: ./apps/py-worker
+      dockerfile: Dockerfile
+    container_name: lifeos-py-worker
+    environment:
+      - REDIS_HOST=redis
+      - QDRANT_HOST=qdrant
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      - redis
+      - qdrant
+      - ollama
+    networks:
+      - lifeos-net
+
+networks:
+  lifeos-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:
+  ollama_data:
+
+

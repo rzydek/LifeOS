@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+redis
+qdrant-client
+langchain
+beautifulsoup4
+playwright
+pandas
+requests
+ollama
+openai
+pydantic
+python-dotenv
+aiohttp
+
