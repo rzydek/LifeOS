@@ -20,7 +20,7 @@
                         "input": "apps/mfe-garage/public"
                     }
                 ],
-                "styles": ["apps/mfe-garage/src/styles.css"],
+                "styles": ["apps/mfe-garage/src/styles.scss"],
                 "customWebpackConfig": {
                     "path": "apps/mfe-garage/webpack.config.ts"
                 }

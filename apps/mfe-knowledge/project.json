@@ -20,7 +20,7 @@
                         "input": "apps/mfe-knowledge/public"
                     }
                 ],
-                "styles": ["apps/mfe-knowledge/src/styles.css"],
+                "styles": ["apps/mfe-knowledge/src/styles.scss"],
                 "customWebpackConfig": {
                     "path": "apps/mfe-knowledge/webpack.config.ts"
                 }

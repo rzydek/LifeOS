@@ -20,7 +20,7 @@
                         "input": "apps/mfe-family/public"
                     }
                 ],
-                "styles": ["apps/mfe-family/src/styles.css"],
+                "styles": ["apps/mfe-family/src/styles.scss"],
                 "customWebpackConfig": {
                     "path": "apps/mfe-family/webpack.config.ts"
                 }
