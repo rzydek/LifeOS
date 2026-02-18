@@ -20,7 +20,7 @@
                         "input": "apps/shell/public"
                     }
                 ],
-                "styles": ["apps/shell/src/styles.scss"],
+                "styles": ["apps/shell/src/styles.css"],
                 "customWebpackConfig": {
                     "path": "apps/shell/webpack.config.ts"
                 }

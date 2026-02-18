@@ -1,0 +1,37 @@
+<header class="flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6">
+    <button hlmSidebarTrigger>
+        <span class="sr-only">Toggle navigation menu</span>
+    </button>
+    <div class="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+        <div class="ml-auto flex-1 sm:flex-initial">
+            <!-- Add search here if needed -->
+        </div>
+        <div class="relative ml-auto flex-1 md:grow-0">
+            <button hlmBtn variant="ghost" size="icon" [hlmDropdownMenuTrigger]="userMenu">
+                <hlm-avatar>
+                    <img src="https://github.com/shadcn.png" alt="User" hlmAvatarImage />
+                    <span hlmAvatarFallback>JD</span>
+                </hlm-avatar>
+            </button>
+            <ng-template #userMenu>
+                <div hlmDropdownMenu class="w-56">
+                    <div hlmDropdownMenuLabel>My Account</div>
+                    <div hlmDropdownMenuSeparator></div>
+                    <button hlmDropdownMenuItem>
+                        <ng-icon hlm name="lucideUser" class="mr-2 h-4 w-4" />
+                        <span>Profile</span>
+                    </button>
+                    <button hlmDropdownMenuItem>
+                        <ng-icon hlm name="lucideSettings" class="mr-2 h-4 w-4" />
+                        <span>Settings</span>
+                    </button>
+                    <div hlmDropdownMenuSeparator></div>
+                    <button hlmDropdownMenuItem>
+                        <ng-icon hlm name="lucideLogOut" class="mr-2 h-4 w-4" />
+                        <span>Log out</span>
+                    </button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</header>
