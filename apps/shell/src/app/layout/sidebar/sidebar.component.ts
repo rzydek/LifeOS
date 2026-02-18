@@ -4,7 +4,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HlmIconImports } from '@spartan-ng/helm/icon';
 import { HlmSidebarImports } from '@spartan-ng/helm/sidebar';
 import { provideIcons, NgIcon } from '@ng-icons/core';
-import { lucideLayoutDashboard, lucideBox, lucideBookOpen, lucideSettings, lucidePackage } from '@ng-icons/lucide';
+import { lucideLayoutDashboard, lucideGalleryVerticalEnd, lucideBox, lucideBookOpen, lucideSettings, lucidePackage } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,6 +23,7 @@ import { lucideLayoutDashboard, lucideBox, lucideBookOpen, lucideSettings, lucid
       lucideBox, 
       lucideBookOpen, 
       lucideSettings,
+      lucideGalleryVerticalEnd,
       lucidePackage 
     })
   ],
