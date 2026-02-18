@@ -1,4 +1,4 @@
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
@@ -11,7 +11,7 @@ export interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:3001/api/auth';
+  private readonly apiUrl = '/api/auth';
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   
