@@ -23,9 +23,9 @@ services:
     image: postgres:15-alpine
     container_name: lifeos-postgres
     environment:
-      POSTGRES_USER: lifeos
-      POSTGRES_PASSWORD: lifeos_password
-      POSTGRES_DB: lifeos_db
+      POSTGRES_USER: ${POSTGRES_USER:-lifeos}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lifeos_password}
+      POSTGRES_DB: ${POSTGRES_DB:-lifeos_db}
     ports:
       - "5435:5432"
     volumes:
@@ -71,9 +71,9 @@ services:
       dockerfile: apps/nest-core/Dockerfile
     container_name: lifeos-nest-core
     environment:
-      - DATABASE_URL=postgresql://lifeos:lifeos_password@postgres:5432/lifeos_db
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - DATABASE_URL=${DATABASE_URL:-postgresql://lifeos:lifeos_password@postgres:5432/lifeos_db}
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
     depends_on:
       - postgres
       - redis
@@ -102,9 +102,9 @@ services:
       dockerfile: Dockerfile
     container_name: lifeos-py-worker
     environment:
-      - REDIS_HOST=redis
-      - QDRANT_HOST=qdrant
-      - OLLAMA_HOST=http://ollama:11434
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - QDRANT_HOST=${QDRANT_HOST:-qdrant}
+      - OLLAMA_HOST=${OLLAMA_HOST:-http://ollama:11434}
     depends_on:
       - redis
       - qdrant
