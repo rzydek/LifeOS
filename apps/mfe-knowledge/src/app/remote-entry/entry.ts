@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NxWelcome } from './nx-welcome';
+import { NxWelcome } from './knowledge.component';
 
 @Component({
     imports: [NxWelcome],
-    selector: 'app-mfeKnowledge-entry',
-    template: `<app-nx-welcome></app-nx-welcome>`,
+    selector: 'app-mfe-knowledge-entry',
+    template: `<app-knowledge></app-knowledge>`,
 })
 export class RemoteEntry {}

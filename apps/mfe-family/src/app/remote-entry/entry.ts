@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NxWelcome } from './nx-welcome';
+import { FamilyComponent } from './family.component';
 
 @Component({
-    imports: [NxWelcome],
-    selector: 'app-mfeFamily-entry',
-    template: `<app-nx-welcome></app-nx-welcome>`,
+    imports: [FamilyComponent],
+    selector: 'app-mfe-family-entry',
+    template: `<app-family></app-family>`,
 })
 export class RemoteEntry {}

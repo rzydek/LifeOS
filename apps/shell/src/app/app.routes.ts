@@ -15,12 +15,12 @@ export const appRoutes: Route[] = [
         canActivate: [authGuard], 
         children: [
             {
-                path: 'mfeKnowledge',
+                path: 'knowledge',
                 loadChildren: () =>
                     import('mfeKnowledge/Routes').then((m) => m!.remoteRoutes),
             },
             {
-                path: 'mfeFamily',
+                path: 'family',
                 loadChildren: () =>
                     import('mfeFamily/Routes').then((m) => m!.remoteRoutes),
             },
