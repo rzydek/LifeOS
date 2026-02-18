@@ -6,6 +6,7 @@ import { HlmCardImports } from '@spartan-ng/helm/card';
 import { HlmFieldImports } from '@spartan-ng/helm/field';
 import { HlmInputImports } from '@spartan-ng/helm/input';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
 	selector: 'app-login-form',
@@ -24,16 +25,20 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginFormComponent {
 	private readonly _fb = inject(FormBuilder);
+    private readonly _authService = inject(AuthService);
 
 	public form = this._fb.nonNullable.group({
 		email: ['', [Validators.required, Validators.email]],
-		password: ['', [Validators.required, Validators.minLength(8)]],
+		password: ['', [Validators.required, Validators.minLength(6)]],
 	});
 
 	public login() {
 		if (this.form.valid) {
-			// login logic here
-			console.log(this.form.value);
+			const { email, password } = this.form.getRawValue();
+            this._authService.login({ email, password }).subscribe({
+                error: (err) => console.error('Login failed', err),
+            });
 		}
 	}
 }
+

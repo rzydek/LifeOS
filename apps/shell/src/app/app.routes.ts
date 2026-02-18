@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NxWelcome } from './nx-welcome';
+import { authGuard } from './core/auth/auth.guard';
 
 export const appRoutes: Route[] = [
     {
@@ -11,6 +12,7 @@ export const appRoutes: Route[] = [
     {
         path: '',
         component: LayoutComponent,
+        canActivate: [authGuard], 
         children: [
             {
                 path: 'mfeKnowledge',
