@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -7,6 +7,10 @@ import { RouterModule } from '@angular/router';
     templateUrl: './app.html',
     styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnInit {
     protected title = 'shell';
+
+    public ngOnInit(): void {
+        document.querySelector('html')?.classList.add('dark');
+    }
 }

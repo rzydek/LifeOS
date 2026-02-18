@@ -71,6 +71,10 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.552 0.016 285.938);
+
+    --spotlight-gradient:
+        68.54% 68.72% at 55.02% 31.46%, #d9d9d914 0, #8c8c8c05 50%,
+        #73737300 80%;
 }
 
 @layer base {
