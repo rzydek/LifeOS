@@ -14,6 +14,7 @@ import { HlmSelectImports } from '@spartan-ng/helm/select';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { provideIcons } from '@ng-icons/core';
 import { lucidePlus } from '@ng-icons/lucide';
+import { TranslatePipe } from '@lifeos-nexus/ui';
 
 @Component({
     selector: 'lifeos-search-config-form',
@@ -27,6 +28,7 @@ import { lucidePlus } from '@ng-icons/lucide';
         HlmIconImports,
         HlmSelectImports,
         BrnSelectImports,
+        TranslatePipe,
     ],
     providers: [provideIcons({ lucidePlus })],
     templateUrl: './search-config-form.component.html',
@@ -39,7 +41,6 @@ export class SearchConfigFormComponent {
     openCategoryDialog = output<void>();
     openLocationDialog = output<void>();
 
-    // Internal model for form state
     newConfig = signal<{
         query: string;
         source: string;

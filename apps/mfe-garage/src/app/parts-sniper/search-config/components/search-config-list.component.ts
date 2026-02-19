@@ -5,11 +5,12 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmIconImports } from '@spartan-ng/helm/icon';
 import { provideIcons } from '@ng-icons/core';
 import { lucideClock, lucideX, lucideTrash2, lucidePause, lucidePlay } from '@ng-icons/lucide';
+import { TranslatePipe } from '@lifeos-nexus/ui';
 
 @Component({
   selector: 'lifeos-search-config-list',
   standalone: true,
-  imports: [CommonModule, HlmButtonImports, HlmIconImports],
+  imports: [CommonModule, HlmButtonImports, HlmIconImports, TranslatePipe],
   providers: [provideIcons({ lucideClock, lucideX, lucideTrash2, lucidePause, lucidePlay })],
   templateUrl: './search-config-list.component.html'
 })

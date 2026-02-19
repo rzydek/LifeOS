@@ -5,6 +5,16 @@ const config: ModuleFederationConfig = {
     exposes: {
         './Routes': 'apps/mfe-family/src/app/remote-entry/entry.routes.ts',
     },
+    shared: (libraryName, defaultConfig) => {
+        if (libraryName === '@lifeos-nexus/ui') {
+            return {
+                singleton: true,
+                strictVersion: true,
+                requiredVersion: '0.0.1',
+            };
+        }
+        return defaultConfig;
+    },
 };
 
 /**

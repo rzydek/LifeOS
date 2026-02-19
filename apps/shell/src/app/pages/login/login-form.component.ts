@@ -7,6 +7,7 @@ import { HlmFieldImports } from '@spartan-ng/helm/field';
 import { HlmInputImports } from '@spartan-ng/helm/input';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/auth/auth.service';
+import { TranslatePipe } from '@lifeos-nexus/ui';
 
 @Component({
 	selector: 'app-login-form',
@@ -18,7 +19,8 @@ import { AuthService } from '../../core/auth/auth.service';
 		HlmCardImports, 
 		HlmFieldImports, 
 		HlmInputImports, 
-		HlmButtonImports
+		HlmButtonImports,
+		TranslatePipe
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './login-form.component.html',

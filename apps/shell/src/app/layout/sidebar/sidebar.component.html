@@ -6,7 +6,7 @@
             >
                 <ng-icon hlm size="sm" name="lucideGalleryVerticalEnd" />
             </div>
-            <span>LifeOS</span>
+            <span>{{ 'app.title' | translate }}</span>
         </button>
     </hlm-sidebar-header>
     <hlm-sidebar-content>
@@ -21,7 +21,7 @@
                             hlmSidebarMenuButton
                         >
                             <ng-icon hlm name="lucideLayoutDashboard" />
-                            <span>Dashboard</span>
+                            <span>{{ 'nav.dashboard' | translate }}</span>
                         </a>
                     </li>
                     <li hlmSidebarMenuItem>
@@ -31,7 +31,7 @@
                             hlmSidebarMenuButton
                         >
                             <ng-icon hlm name="lucideBox" />
-                            <span>Garage</span>
+                            <span>{{ 'nav.garage' | translate }}</span>
                         </a>
                     </li>
                     <li hlmSidebarMenuItem>
@@ -41,7 +41,7 @@
                             hlmSidebarMenuButton
                         >
                             <ng-icon hlm name="lucidePackage" />
-                            <span>Family</span>
+                            <span>{{ 'nav.family' | translate }}</span>
                         </a>
                     </li>
                     <li hlmSidebarMenuItem>
@@ -51,7 +51,7 @@
                             hlmSidebarMenuButton
                         >
                             <ng-icon hlm name="lucideBookOpen" />
-                            <span>Knowledge</span>
+                            <span>{{ 'nav.knowledge' | translate }}</span>
                         </a>
                     </li>
                 </ul>

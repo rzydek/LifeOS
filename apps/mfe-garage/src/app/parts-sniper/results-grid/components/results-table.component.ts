@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrapedOffer } from '../../data-access/parts-sniper.model';
 import { HlmTableImports } from '@spartan-ng/helm/table';
@@ -7,13 +7,14 @@ import { HlmIconImports } from '@spartan-ng/helm/icon';
 import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
 import { provideIcons } from '@ng-icons/core';
 import { lucideRefreshCw } from '@ng-icons/lucide';
+import { TranslatePipe } from '@lifeos-nexus/ui';
 
 @Component({
   selector: 'lifeos-results-table',
   standalone: true,
-  imports: [CommonModule, HlmTableImports, HlmButtonImports, HlmIconImports, HlmTooltipImports],
+  imports: [CommonModule, HlmTableImports, HlmButtonImports, HlmIconImports, HlmTooltipImports, TranslatePipe],
   providers: [provideIcons({ lucideRefreshCw })],
-  templateUrl: './results-table.component.html',
+  templateUrl: './results-table.component.html'
 })
 export class ResultsTableComponent {
   offers = input.required<ScrapedOffer[]>();

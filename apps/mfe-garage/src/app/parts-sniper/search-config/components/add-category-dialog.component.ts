@@ -7,11 +7,12 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { HlmDialogImports } from '@spartan-ng/helm/dialog';
 import { BrnDialogContent, BrnDialogImports } from '@spartan-ng/brain/dialog';
+import { TranslatePipe } from '@lifeos-nexus/ui';
 
 @Component({
   selector: 'lifeos-add-category-dialog',
   standalone: true,
-  imports: [CommonModule, FormsModule, HlmInputImports, HlmButtonImports, HlmLabelImports, HlmDialogImports, BrnDialogContent, BrnDialogImports],
+  imports: [CommonModule, FormsModule, HlmInputImports, HlmButtonImports, HlmLabelImports, HlmDialogImports, BrnDialogContent, BrnDialogImports, TranslatePipe],
   templateUrl: './add-category-dialog.component.html'
 })
 export class AddCategoryDialogComponent {

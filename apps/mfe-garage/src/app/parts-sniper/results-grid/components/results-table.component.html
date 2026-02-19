@@ -1,45 +1,90 @@
 <div class="h-full flex flex-col overflow-hidden">
     <div class="flex justify-between items-center mb-4 shrink-0">
         <div class="flex items-center gap-2">
-            <h2 class="text-xl font-bold tracking-tight">Sniper Results</h2>
-            <button hlmBtn variant="ghost" size="icon" (click)="refresh.emit()" title="Refresh Results" class="h-8 w-8 cursor-pointer">
-                <ng-icon hlmIcon name="lucideRefreshCw" size="sm" class="h-4 w-4" />
+            <h2 class="text-xl font-bold tracking-tight">
+                {{ 'sniper.results' | translate }}
+            </h2>
+            <button
+                hlmBtn
+                variant="ghost"
+                size="icon"
+                (click)="refresh.emit()"
+                [title]="'actions.refresh' | translate"
+                class="h-8 w-8 cursor-pointer"
+            >
+                <ng-icon
+                    hlmIcon
+                    name="lucideRefreshCw"
+                    size="sm"
+                    class="h-4 w-4"
+                />
             </button>
         </div>
     </div>
 
-    <div class="flex-1 overflow-auto rounded-lg border shadow-sm bg-card" hlmTableContainer>
+    <div
+        class="flex-1 overflow-auto rounded-lg border shadow-sm bg-card"
+        hlmTableContainer
+    >
         <table hlmTable class="w-full">
             <thead hlmTHead>
                 <tr hlmTr>
-                    <th hlmTh>Title</th>
-                    <th hlmTh>Price</th>
-                    <th hlmTh>Score</th>
-                    <th hlmTh>Detected</th>
+                    <th hlmTh>{{ 'results.title' | translate }}</th>
+                    <th hlmTh>{{ 'results.price' | translate }}</th>
+                    <th hlmTh>{{ 'results.score' | translate }}</th>
+                    <th hlmTh>{{ 'results.detected' | translate }}</th>
                 </tr>
             </thead>
             <tbody hlmTBody>
                 @for (offer of offers(); track offer.id) {
-                    <tr hlmTr class="hover:bg-muted/50 transition-colors cursor-pointer" (click)="offerSelected.emit(offer)">
-                        <td hlmTd class="max-w-[200px] sm:max-w-[300px] md:max-w-[400px]">
-                            <div class="font-medium line-clamp-2 truncate" [hlmTooltip]="offer.title">{{ offer.title }}</div>
+                    <tr
+                        hlmTr
+                        class="hover:bg-muted/50 transition-colors cursor-pointer"
+                        (click)="offerSelected.emit(offer)"
+                    >
+                        <td
+                            hlmTd
+                            class="max-w-[200px] sm:max-w-[300px] md:max-w-[400px]"
+                        >
+                            <div
+                                class="font-medium line-clamp-2 truncate"
+                                [hlmTooltip]="offer.title"
+                            >
+                                {{ offer.title }}
+                            </div>
                         </td>
                         <td hlmTd class="font-medium tabular-nums">
-                            <span>{{ offer.priceHistory[0]?.price | currency:offer.priceHistory[0]?.currency:'symbol':'1.0-0' }}</span>
+                            <span>{{
+                                offer.priceHistory[0]?.price
+                                    | currency
+                                        : offer.priceHistory[0]?.currency
+                                        : 'symbol'
+                                        : '1.0-0'
+                            }}</span>
                         </td>
                         <td hlmTd>
-                            <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2" [ngClass]="getScoreClass(offer.aiScore)">
+                            <span
+                                class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                [ngClass]="getScoreClass(offer.aiScore)"
+                            >
                                 {{ offer.aiScore }}
                             </span>
                         </td>
-                        <td hlmTd class="text-muted-foreground text-xs whitespace-nowrap">
-                            {{ offer.detectedAt | date:'longDate' }}
+                        <td
+                            hlmTd
+                            class="text-muted-foreground text-xs whitespace-nowrap"
+                        >
+                            {{ offer.detectedAt | date: 'longDate' }}
                         </td>
                     </tr>
                 } @empty {
                     <tr hlmTr>
-                        <td hlmTd colspan="4" class="text-center py-10 text-muted-foreground">
-                            No results found matching your criteria.
+                        <td
+                            hlmTd
+                            colspan="4"
+                            class="text-center py-10 text-muted-foreground"
+                        >
+                            {{ 'results.noResults' | translate }}
                         </td>
                     </tr>
                 }

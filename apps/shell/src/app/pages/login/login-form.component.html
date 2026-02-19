@@ -1,15 +1,15 @@
 <hlm-card>
     <hlm-card-header>
-        <h3 hlmCardTitle>Login to your account</h3>
+        <h3 hlmCardTitle>{{ 'auth.loginTitle' | translate }}</h3>
         <p hlmCardDescription>
-            Enter your email below to login to your account
+            {{ 'auth.loginDesc' | translate }}
         </p>
     </hlm-card-header>
     <div hlmCardContent>
         <form [formGroup]="form" (ngSubmit)="login()">
             <hlm-field-group>
                 <hlm-field>
-                    <label hlmFieldLabel for="email">Email</label>
+                    <label hlmFieldLabel for="email">{{ 'form.email' | translate }}</label>
                     <input
                         hlmInput
                         type="email"
@@ -23,23 +23,23 @@
                     ) {
                         <hlm-field-error>
                             @if (form.controls.email.errors?.['required']) {
-                                Email is required.
+                                {{ 'validation.emailRequired' | translate }}
                             }
                             @if (form.controls.email.errors?.['email']) {
-                                Enter a valid email address.
+                                {{ 'validation.emailInvalid' | translate }}
                             }
                         </hlm-field-error>
                     }
                 </hlm-field>
                 <hlm-field>
                     <div class="flex items-center">
-                        <label hlmFieldLabel for="password">Password</label>
+                        <label hlmFieldLabel for="password">{{ 'form.password' | translate }}</label>
                         <a
                             hlmFieldDescription
                             class="ml-auto text-sm underline-offset-4 hover:underline"
                             routerLink="."
                         >
-                            Forgot password?
+                            {{ 'auth.forgotPassword' | translate }}
                         </a>
                     </div>
                     <input
@@ -54,17 +54,17 @@
                     ) {
                         <hlm-field-error>
                             @if (form.controls.password.errors?.['required']) {
-                                Password is required.
+                                {{ 'validation.passwordRequired' | translate }}
                             }
                             @if (form.controls.password.errors?.['minlength']) {
-                                Password must be at least 8 characters long.
+                                {{ 'validation.passwordLength' | translate }}
                             }
                         </hlm-field-error>
                     }
                 </hlm-field>
                 <hlm-field>
                     <button hlmBtn type="submit" [disabled]="form.invalid">
-                        Login
+                        {{ 'auth.login' | translate }}
                     </button>
                 </hlm-field>
             </hlm-field-group>

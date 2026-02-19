@@ -1,14 +1,16 @@
 
 <div class="h-full flex flex-col p-6 bg-background min-h-screen">
-  <div class="mb-6">
-    <h1 class="text-3xl font-bold tracking-tight">Parts Sniper</h1>
-    <p class="text-muted-foreground mt-2">Automated OLX market monitoring and deal analysis.</p>
+  <div class="mb-6 flex justify-between items-start">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight">{{ 'sniper.title' | translate }}</h1>
+        <p class="text-muted-foreground mt-2">{{ 'sniper.description' | translate }}</p>
+    </div>
   </div>
 
   <hlm-tabs tab="results" class="gap-4">
     <hlm-tabs-list variant="line">
-       <button hlmTabsTrigger="results">Sniper Results</button>
-       <button hlmTabsTrigger="config">Search Configuration</button>
+       <button hlmTabsTrigger="results">{{ 'results.title' | translate }}</button>
+       <button hlmTabsTrigger="config">{{ 'search.title' | translate }}</button>
     </hlm-tabs-list>
 
     <div hlmTabsContent="results" class="flex-1 flex flex-col min-h-0">
@@ -17,13 +19,13 @@
                  
                  <div class="rounded-xl border bg-card text-card-foreground shadow-sm overflow-hidden">
                     <div class="p-4 border-b bg-muted/40">
-                        <h3 class="font-semibold">Search Configs</h3>
+                        <h3 class="font-semibold">{{ 'sniper.searchConfigs' | translate }}</h3>
                     </div>
                     <div class="p-2 space-y-1">
                         <button hlmBtn variant="ghost" class="w-full justify-start font-normal text-left cursor-pointer" 
                                 [ngClass]="{'bg-accent text-accent-foreground font-medium': !selectedConfigId()}"
                                 (click)="selectConfig(undefined)">
-                            All Configs
+                            {{ 'sniper.allConfigs' | translate }}
                         </button>
                         @for (config of configs(); track config.id) {
                             <button hlmBtn variant="ghost" class="w-full justify-start font-normal text-left truncate block cursor-pointer" 
@@ -37,14 +39,14 @@
                  </div>
 
                  <div class="rounded-xl border bg-card text-card-foreground shadow-sm p-4">
-                    <h3 class="font-semibold mb-4">Great Deals Threshold</h3>
+                    <h3 class="font-semibold mb-4">{{ 'sniper.threshold' | translate }}</h3>
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
-                            <label hlmLabel for="score-slider">Minimum AI Score</label>
+                            <label hlmLabel for="score-slider">{{ 'sniper.minScore' | translate }}</label>
                             <span class="text-sm font-medium text-muted-foreground">{{ minScore() }}</span>
                         </div>
                         <input id="score-slider" type="range" min="0" max="100" [ngModel]="minScore()" (ngModelChange)="minScore.set($event)" class="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary">
-                        <p class="text-xs text-muted-foreground">Only show results with an AI confidence score above this value.</p>
+                        <p class="text-xs text-muted-foreground">{{ 'sniper.scoreHelp' | translate }}</p>
                     </div>
                  </div>
 

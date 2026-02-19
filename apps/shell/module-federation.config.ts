@@ -15,6 +15,16 @@ const config: ModuleFederationConfig = {
      *
      */
     remotes: ['mfeGarage', 'mfeFamily', 'mfeKnowledge'],
+    shared: (libraryName, defaultConfig) => {
+        if (libraryName === '@lifeos-nexus/ui') {
+            return {
+                singleton: true,
+                strictVersion: true,
+                requiredVersion: '0.0.1',
+            };
+        }
+        return defaultConfig;
+    },
 };
 
 /**

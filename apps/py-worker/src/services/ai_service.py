@@ -8,16 +8,20 @@ from pydantic import BaseModel, Field
 from src.config import OLLAMA_HOST
 from src.utils.logger import logger
 
+class DealReasoning(BaseModel):
+    en: str = Field(description="Short reasoning in English")
+    pl: str = Field(description="Krótkie uzasadnienie po polsku")
+
 class DealEvaluation(BaseModel):
     score: int = Field(description="Score from 0-100 where 100 is an amazing deal and relevant, 0 is spam or irrelevant")
-    reasoning: str = Field(description="Short reasoning for the score")
+    reasoning: DealReasoning = Field(description="Reasoning for the score in both languages")
 
 class AIService:
     def __init__(self):
         self.chain = None
         self._initialize()
 
-    def _ensure_ollama_model(self, base_url, model_name="mistral"):
+    def _ensure_ollama_model(self, base_url, model_name="llama3"):
         try:
             if base_url.endswith('/'):
                 base_url = base_url[:-1]
@@ -53,14 +57,15 @@ class AIService:
 
     def _initialize(self):
         try:
-            self._ensure_ollama_model(OLLAMA_HOST, "mistral")
-            llm = ChatOllama(model="mistral", base_url=OLLAMA_HOST)
+            model_name = "llama3"
+            self._ensure_ollama_model(OLLAMA_HOST, model_name)
+            llm = ChatOllama(model=model_name, base_url=OLLAMA_HOST)
             
             parser = JsonOutputParser(pydantic_object=DealEvaluation)
 
             prompt = ChatPromptTemplate.from_messages([
-                ("system", "You are an expert car mechanic and parts trader specializing in Mercedes AMG and Jeep. Evaluate if the following item is relevant to the search query and if it's a good deal. Be critical."),
-                ("user", "Search Query: {query}\nItem Title: {title}\nItem Description: {description}\nPrice: {price} {currency}\n\nReturn JSON with 'score' (0-100) and 'reasoning'."),
+                ("system", "You are an expert car mechanic and parts trader specializing in Mercedes AMG and Jeep. Evaluate if the following item is relevant to the search query and if it's a good deal. Be critical. Provide reasoning in both English and Polish."),
+                ("user", "Search Query: {query}\nItem Title: {title}\nItem Description: {description}\nPrice: {price} {currency}\n\nReturn JSON with 'score' (0-100) and 'reasoning' object containing 'en' and 'pl' keys."),
             ])
 
             self.chain = prompt | llm | parser

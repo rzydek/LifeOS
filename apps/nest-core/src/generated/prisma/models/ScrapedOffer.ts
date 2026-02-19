@@ -46,7 +46,6 @@ export type ScrapedOfferMinAggregateOutputType = {
   lastSeenAt: Date | null
   isActive: boolean | null
   aiScore: number | null
-  aiReasoning: string | null
 }
 
 export type ScrapedOfferMaxAggregateOutputType = {
@@ -61,7 +60,6 @@ export type ScrapedOfferMaxAggregateOutputType = {
   lastSeenAt: Date | null
   isActive: boolean | null
   aiScore: number | null
-  aiReasoning: string | null
 }
 
 export type ScrapedOfferCountAggregateOutputType = {
@@ -101,7 +99,6 @@ export type ScrapedOfferMinAggregateInputType = {
   lastSeenAt?: true
   isActive?: true
   aiScore?: true
-  aiReasoning?: true
 }
 
 export type ScrapedOfferMaxAggregateInputType = {
@@ -116,7 +113,6 @@ export type ScrapedOfferMaxAggregateInputType = {
   lastSeenAt?: true
   isActive?: true
   aiScore?: true
-  aiReasoning?: true
 }
 
 export type ScrapedOfferCountAggregateInputType = {
@@ -233,7 +229,7 @@ export type ScrapedOfferGroupByOutputType = {
   lastSeenAt: Date
   isActive: boolean
   aiScore: number | null
-  aiReasoning: string | null
+  aiReasoning: runtime.JsonValue | null
   _count: ScrapedOfferCountAggregateOutputType | null
   _avg: ScrapedOfferAvgAggregateOutputType | null
   _sum: ScrapedOfferSumAggregateOutputType | null
@@ -271,7 +267,7 @@ export type ScrapedOfferWhereInput = {
   lastSeenAt?: Prisma.DateTimeFilter<"ScrapedOffer"> | Date | string
   isActive?: Prisma.BoolFilter<"ScrapedOffer"> | boolean
   aiScore?: Prisma.IntNullableFilter<"ScrapedOffer"> | number | null
-  aiReasoning?: Prisma.StringNullableFilter<"ScrapedOffer"> | string | null
+  aiReasoning?: Prisma.JsonNullableFilter<"ScrapedOffer">
   searchConfig?: Prisma.XOR<Prisma.SearchConfigScalarRelationFilter, Prisma.SearchConfigWhereInput>
   priceHistory?: Prisma.OfferPriceHistoryListRelationFilter
 }
@@ -309,7 +305,7 @@ export type ScrapedOfferWhereUniqueInput = Prisma.AtLeast<{
   lastSeenAt?: Prisma.DateTimeFilter<"ScrapedOffer"> | Date | string
   isActive?: Prisma.BoolFilter<"ScrapedOffer"> | boolean
   aiScore?: Prisma.IntNullableFilter<"ScrapedOffer"> | number | null
-  aiReasoning?: Prisma.StringNullableFilter<"ScrapedOffer"> | string | null
+  aiReasoning?: Prisma.JsonNullableFilter<"ScrapedOffer">
   searchConfig?: Prisma.XOR<Prisma.SearchConfigScalarRelationFilter, Prisma.SearchConfigWhereInput>
   priceHistory?: Prisma.OfferPriceHistoryListRelationFilter
 }, "id" | "externalId_searchConfigId">
@@ -349,7 +345,7 @@ export type ScrapedOfferScalarWhereWithAggregatesInput = {
   lastSeenAt?: Prisma.DateTimeWithAggregatesFilter<"ScrapedOffer"> | Date | string
   isActive?: Prisma.BoolWithAggregatesFilter<"ScrapedOffer"> | boolean
   aiScore?: Prisma.IntNullableWithAggregatesFilter<"ScrapedOffer"> | number | null
-  aiReasoning?: Prisma.StringNullableWithAggregatesFilter<"ScrapedOffer"> | string | null
+  aiReasoning?: Prisma.JsonNullableWithAggregatesFilter<"ScrapedOffer">
 }
 
 export type ScrapedOfferCreateInput = {
@@ -363,7 +359,7 @@ export type ScrapedOfferCreateInput = {
   lastSeenAt?: Date | string
   isActive?: boolean
   aiScore?: number | null
-  aiReasoning?: string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   searchConfig: Prisma.SearchConfigCreateNestedOneWithoutOffersInput
   priceHistory?: Prisma.OfferPriceHistoryCreateNestedManyWithoutOfferInput
 }
@@ -380,7 +376,7 @@ export type ScrapedOfferUncheckedCreateInput = {
   lastSeenAt?: Date | string
   isActive?: boolean
   aiScore?: number | null
-  aiReasoning?: string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   priceHistory?: Prisma.OfferPriceHistoryUncheckedCreateNestedManyWithoutOfferInput
 }
 
@@ -395,7 +391,7 @@ export type ScrapedOfferUpdateInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   searchConfig?: Prisma.SearchConfigUpdateOneRequiredWithoutOffersNestedInput
   priceHistory?: Prisma.OfferPriceHistoryUpdateManyWithoutOfferNestedInput
 }
@@ -412,7 +408,7 @@ export type ScrapedOfferUncheckedUpdateInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   priceHistory?: Prisma.OfferPriceHistoryUncheckedUpdateManyWithoutOfferNestedInput
 }
 
@@ -428,7 +424,7 @@ export type ScrapedOfferCreateManyInput = {
   lastSeenAt?: Date | string
   isActive?: boolean
   aiScore?: number | null
-  aiReasoning?: string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ScrapedOfferUpdateManyMutationInput = {
@@ -442,7 +438,7 @@ export type ScrapedOfferUpdateManyMutationInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ScrapedOfferUncheckedUpdateManyInput = {
@@ -457,7 +453,7 @@ export type ScrapedOfferUncheckedUpdateManyInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ScrapedOfferListRelationFilter = {
@@ -506,7 +502,6 @@ export type ScrapedOfferMaxOrderByAggregateInput = {
   lastSeenAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   aiScore?: Prisma.SortOrder
-  aiReasoning?: Prisma.SortOrder
 }
 
 export type ScrapedOfferMinOrderByAggregateInput = {
@@ -521,7 +516,6 @@ export type ScrapedOfferMinOrderByAggregateInput = {
   lastSeenAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   aiScore?: Prisma.SortOrder
-  aiReasoning?: Prisma.SortOrder
 }
 
 export type ScrapedOfferSumOrderByAggregateInput = {
@@ -608,7 +602,7 @@ export type ScrapedOfferCreateWithoutSearchConfigInput = {
   lastSeenAt?: Date | string
   isActive?: boolean
   aiScore?: number | null
-  aiReasoning?: string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   priceHistory?: Prisma.OfferPriceHistoryCreateNestedManyWithoutOfferInput
 }
 
@@ -623,7 +617,7 @@ export type ScrapedOfferUncheckedCreateWithoutSearchConfigInput = {
   lastSeenAt?: Date | string
   isActive?: boolean
   aiScore?: number | null
-  aiReasoning?: string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   priceHistory?: Prisma.OfferPriceHistoryUncheckedCreateNestedManyWithoutOfferInput
 }
 
@@ -668,7 +662,7 @@ export type ScrapedOfferScalarWhereInput = {
   lastSeenAt?: Prisma.DateTimeFilter<"ScrapedOffer"> | Date | string
   isActive?: Prisma.BoolFilter<"ScrapedOffer"> | boolean
   aiScore?: Prisma.IntNullableFilter<"ScrapedOffer"> | number | null
-  aiReasoning?: Prisma.StringNullableFilter<"ScrapedOffer"> | string | null
+  aiReasoning?: Prisma.JsonNullableFilter<"ScrapedOffer">
 }
 
 export type ScrapedOfferCreateWithoutPriceHistoryInput = {
@@ -682,7 +676,7 @@ export type ScrapedOfferCreateWithoutPriceHistoryInput = {
   lastSeenAt?: Date | string
   isActive?: boolean
   aiScore?: number | null
-  aiReasoning?: string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   searchConfig: Prisma.SearchConfigCreateNestedOneWithoutOffersInput
 }
 
@@ -698,7 +692,7 @@ export type ScrapedOfferUncheckedCreateWithoutPriceHistoryInput = {
   lastSeenAt?: Date | string
   isActive?: boolean
   aiScore?: number | null
-  aiReasoning?: string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ScrapedOfferCreateOrConnectWithoutPriceHistoryInput = {
@@ -728,7 +722,7 @@ export type ScrapedOfferUpdateWithoutPriceHistoryInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   searchConfig?: Prisma.SearchConfigUpdateOneRequiredWithoutOffersNestedInput
 }
 
@@ -744,7 +738,7 @@ export type ScrapedOfferUncheckedUpdateWithoutPriceHistoryInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ScrapedOfferCreateManySearchConfigInput = {
@@ -758,7 +752,7 @@ export type ScrapedOfferCreateManySearchConfigInput = {
   lastSeenAt?: Date | string
   isActive?: boolean
   aiScore?: number | null
-  aiReasoning?: string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ScrapedOfferUpdateWithoutSearchConfigInput = {
@@ -772,7 +766,7 @@ export type ScrapedOfferUpdateWithoutSearchConfigInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   priceHistory?: Prisma.OfferPriceHistoryUpdateManyWithoutOfferNestedInput
 }
 
@@ -787,7 +781,7 @@ export type ScrapedOfferUncheckedUpdateWithoutSearchConfigInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   priceHistory?: Prisma.OfferPriceHistoryUncheckedUpdateManyWithoutOfferNestedInput
 }
 
@@ -802,7 +796,7 @@ export type ScrapedOfferUncheckedUpdateManyWithoutSearchConfigInput = {
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aiReasoning?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiReasoning?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -932,7 +926,7 @@ export type $ScrapedOfferPayload<ExtArgs extends runtime.Types.Extensions.Intern
     lastSeenAt: Date
     isActive: boolean
     aiScore: number | null
-    aiReasoning: string | null
+    aiReasoning: runtime.JsonValue | null
   }, ExtArgs["result"]["scrapedOffer"]>
   composites: {}
 }
@@ -1369,7 +1363,7 @@ export interface ScrapedOfferFieldRefs {
   readonly lastSeenAt: Prisma.FieldRef<"ScrapedOffer", 'DateTime'>
   readonly isActive: Prisma.FieldRef<"ScrapedOffer", 'Boolean'>
   readonly aiScore: Prisma.FieldRef<"ScrapedOffer", 'Int'>
-  readonly aiReasoning: Prisma.FieldRef<"ScrapedOffer", 'String'>
+  readonly aiReasoning: Prisma.FieldRef<"ScrapedOffer", 'Json'>
 }
     
 

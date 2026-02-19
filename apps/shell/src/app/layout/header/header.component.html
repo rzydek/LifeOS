@@ -1,37 +1,64 @@
 <header class="flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6">
     <button hlmSidebarTrigger>
-        <span class="sr-only">Toggle navigation menu</span>
+        <span class="sr-only">{{ 'header.toggle_nav' | translate }}</span>
     </button>
     <div class="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <div class="ml-auto flex-1 sm:flex-initial">
             <!-- Add search here if needed -->
         </div>
-        <div class="relative ml-auto flex-1 md:grow-0">
-            <button hlmBtn variant="ghost" size="icon" [hlmDropdownMenuTrigger]="userMenu">
-                <hlm-avatar>
-                    <img src="https://github.com/shadcn.png" alt="User" hlmAvatarImage />
-                    <span hlmAvatarFallback>JD</span>
-                </hlm-avatar>
+
+        <div class="flex items-center gap-2">
+            <!-- Language Switcher -->
+            <div class="relative">
+                <button hlmBtn variant="ghost" size="sm" [hlmDropdownMenuTrigger]="langMenu" class="w-12 px-0">
+                    <span class="font-bold text-sm">{{ i18n.currentLang().toUpperCase() }}</span>
+                </button>
+                <ng-template #langMenu>
+                    <div hlmDropdownMenu class="min-w-[8rem]">
+                        <button hlmDropdownMenuItem (click)="i18n.setLanguage('en')">
+                           <span [class.font-bold]="i18n.currentLang() === 'en'">English</span>
+                        </button>
+                        <button hlmDropdownMenuItem (click)="i18n.setLanguage('pl')">
+                           <span [class.font-bold]="i18n.currentLang() === 'pl'">Polski</span>
+                        </button>
+                    </div>
+                </ng-template>
+            </div>
+       
+            <!-- Theme Switcher -->
+            <button hlmBtn variant="ghost" size="icon" (click)="theme.toggleTheme()">
+                <ng-icon hlm [name]="theme.isDark() ? 'lucideMoon' : 'lucideSun'" class="h-4 w-4" />
+                <span class="sr-only">{{ 'header.theme' | translate }}</span>
             </button>
-            <ng-template #userMenu>
-                <div hlmDropdownMenu class="w-56">
-                    <div hlmDropdownMenuLabel>My Account</div>
-                    <div hlmDropdownMenuSeparator></div>
-                    <button hlmDropdownMenuItem>
-                        <ng-icon hlm name="lucideUser" class="mr-2 h-4 w-4" />
-                        <span>Profile</span>
-                    </button>
-                    <button hlmDropdownMenuItem>
-                        <ng-icon hlm name="lucideSettings" class="mr-2 h-4 w-4" />
-                        <span>Settings</span>
-                    </button>
-                    <div hlmDropdownMenuSeparator></div>
-                    <button hlmDropdownMenuItem>
-                        <ng-icon hlm name="lucideLogOut" class="mr-2 h-4 w-4" />
-                        <span>Log out</span>
-                    </button>
-                </div>
-            </ng-template>
+
+            <!-- User Menu -->
+            <div class="relative ml-2">
+                <button hlmBtn variant="ghost" size="icon" [hlmDropdownMenuTrigger]="userMenu">
+                    <hlm-avatar>
+                        <img src="https://github.com/shadcn.png" alt="User" hlmAvatarImage />
+                        <span hlmAvatarFallback>JD</span>
+                    </hlm-avatar>
+                </button>
+                <ng-template #userMenu>
+                    <div hlmDropdownMenu class="w-56">
+                        <div hlmDropdownMenuLabel>{{ 'header.account' | translate }}</div>
+                        <div hlmDropdownMenuSeparator></div>
+                        <button hlmDropdownMenuItem>
+                            <ng-icon hlm name="lucideUser" class="mr-2 h-4 w-4" />
+                            <span>{{ 'header.profile' | translate }}</span>
+                        </button>
+                        <button hlmDropdownMenuItem>
+                            <ng-icon hlm name="lucideSettings" class="mr-2 h-4 w-4" />
+                            <span>{{ 'nav.settings' | translate }}</span>
+                        </button>
+                        <div hlmDropdownMenuSeparator></div>
+                        <button hlmDropdownMenuItem>
+                            <ng-icon hlm name="lucideLogOut" class="mr-2 h-4 w-4" />
+                            <span>{{ 'header.logout' | translate }}</span>
+                        </button>
+                    </div>
+                </ng-template>
+            </div>
         </div>
     </div>
 </header>

@@ -34,7 +34,7 @@ export interface ScrapedOffer {
   lastSeenAt: Date;
   isActive: boolean;
   aiScore: number;
-  aiReasoning?: string;
+  aiReasoning?: { en?: string; pl?: string } | string;
   priceHistory: OfferPriceHistory[];
 }
 

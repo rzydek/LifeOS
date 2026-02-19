@@ -9,6 +9,7 @@ import { HlmInputImports } from '@spartan-ng/helm/input';
 import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { PartsSniperService } from './data-access/parts-sniper.service';
 import { SearchConfig } from './data-access/parts-sniper.model';
+import { TranslatePipe } from '@lifeos-nexus/ui';
 
 @Component({
   selector: 'lifeos-parts-sniper',
@@ -21,7 +22,8 @@ import { SearchConfig } from './data-access/parts-sniper.model';
     HlmTabsImports,
     HlmButtonImports,
     HlmInputImports,
-    HlmLabelImports
+    HlmLabelImports,
+    TranslatePipe
   ],
   templateUrl: './parts-sniper.component.html'
 })

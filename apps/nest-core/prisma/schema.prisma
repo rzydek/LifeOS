@@ -82,7 +82,7 @@ model ScrapedOffer {
 
   // AI Analysis
   aiScore       Int?     // 0-100
-  aiReasoning   String?
+  aiReasoning   Json?    // { en: "...", pl: "..." }
 
   @@unique([externalId, searchConfigId])
 }
