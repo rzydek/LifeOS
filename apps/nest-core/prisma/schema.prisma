@@ -67,7 +67,7 @@ model ScrapedOffer {
   id            String   @id @default(uuid())
   externalId    String   // Unique ID from OLX
   searchConfigId String
-  searchConfig  SearchConfig @relation(fields: [searchConfigId], references: [id])
+  searchConfig  SearchConfig @relation(fields: [searchConfigId], references: [id], onDelete: Cascade)
   
   title         String
   url           String
@@ -90,7 +90,7 @@ model ScrapedOffer {
 model OfferPriceHistory {
   id        String   @id @default(uuid())
   offerId   String
-  offer     ScrapedOffer @relation(fields: [offerId], references: [id])
+  offer     ScrapedOffer @relation(fields: [offerId], references: [id], onDelete: Cascade)
   
   price     Decimal
   currency  String

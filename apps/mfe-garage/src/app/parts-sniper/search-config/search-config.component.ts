@@ -43,6 +43,13 @@ export class SearchConfigComponent implements OnInit {
     });
   }
 
+  onUpdateConfig(config: Partial<SearchConfig>) {
+    if (!config.id) return;
+    this.service.updateConfig(config.id, config).subscribe((updated) => {
+        this.configs.update(c => c.map(item => item.id === updated.id ? updated : item));
+    });
+  }
+
   onDeleteConfig(id: string) {
     this.service.deleteConfig(id).subscribe(() => {
       this.configs.update(c => c.filter((item) => item.id !== id));

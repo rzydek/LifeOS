@@ -8,7 +8,8 @@
     [configs]="configs()"
     [categories]="categories()"
     [locations]="locations()"
-    (configDeleted)="onDeleteConfig($event)">
+    (configDeleted)="onDeleteConfig($event)"
+    (configUpdated)="onUpdateConfig($event)">
   </lifeos-search-config-list>
 
   <lifeos-search-config-form

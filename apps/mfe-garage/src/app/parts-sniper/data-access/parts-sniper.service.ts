@@ -15,11 +15,19 @@ export class PartsSniperService {
   }
 
   createConfig(config: Partial<SearchConfig>): Observable<SearchConfig> {
-    return this.http.post<SearchConfig>(`${this.apiUrl}/config`, config);
+    const payload = this.preparePayload(config);
+    return this.http.post<SearchConfig>(`${this.apiUrl}/config`, payload);
   }
 
   updateConfig(id: string, config: Partial<SearchConfig>): Observable<SearchConfig> {
-    return this.http.put<SearchConfig>(`${this.apiUrl}/config/${id}`, config);
+    const payload = this.preparePayload(config);
+    return this.http.put<SearchConfig>(`${this.apiUrl}/config/${id}`, payload);
+  }
+  
+  private preparePayload(config: Partial<SearchConfig>): Partial<SearchConfig> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, userId, createdAt, updatedAt, lastRunAt, ...validConfig } = config as any;
+    return validConfig;
   }
   
   deleteConfig(id: string): Observable<void> {
