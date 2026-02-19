@@ -13,7 +13,6 @@ class OlxScraper:
         "Origin": "https://www.olx.pl"
     }
     
-    # Updated Query without unused variables in operation definition
     QUERY = """
     query ListingSearchQuery(
       $searchParameters: [SearchParameter!] = []
@@ -105,7 +104,6 @@ class OlxScraper:
             "operationName": "ListingSearchQuery",
             "variables": {
                 "searchParameters": search_params,
-                # Removed unused variables to prevent GraphQL validation errors
             },
             "query": self.QUERY
         }

@@ -1,4 +1,10 @@
-from olx_scraper import OlxScraper
+import sys
+import os
+
+# Ensure src is in python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from src.scrapers.olx_scraper import OlxScraper
 import logging
 
 logging.basicConfig(level=logging.INFO)

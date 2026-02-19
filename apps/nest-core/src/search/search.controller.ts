@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Param, Query, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Delete, Put, UseGuards, Req } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { SearchService } from './search.service';
 import { CreateCategoryDto, CreateLocationDto, CreateSearchConfigDto, OfferFilterDto, UpdateSearchConfigDto } from './dto/search.dto';
 
@@ -6,19 +7,20 @@ import { CreateCategoryDto, CreateLocationDto, CreateSearchConfigDto, OfferFilte
 export class SearchController {
   constructor(private readonly searchService: SearchService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('config')
   async createConfig(
     @Body() config: CreateSearchConfigDto,
-    // Extract userId from AuthGuard later (assuming 1 for now)
-    // @Req() req
+    @Req() req
   ) {
-    const userId = 1; // Temporary: hardcoded user
+    const userId = req.user.userId;
     return this.searchService.createSearchConfig(userId, config);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('config')
-  async getConfigs() {
-    const userId = 1; 
+  async getConfigs(@Req() req) {
+    const userId = req.user.userId;
     return this.searchService.getSearchConfigs(userId);
   }
 

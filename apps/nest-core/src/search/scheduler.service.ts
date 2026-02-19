@@ -9,7 +9,6 @@ export class SchedulerService implements OnModuleInit {
   private readonly redis: Redis;
 
   constructor(private prisma: PrismaService) {
-    // Ideally get this from ConfigService
     this.redis = new Redis({
       host: process.env.REDIS_HOST || 'localhost',
       port: 6379,
@@ -26,9 +25,6 @@ export class SchedulerService implements OnModuleInit {
     this.logger.debug('Checking for due searches...');
 
     const now = new Date();
-    
-    // Find active searches that need to run
-    // Logic: lastRunAt is null OR (now - lastRunAt) > checkInterval
     
     const activeSearches = await this.prisma.searchConfig.findMany({
       where: { isActive: true },
@@ -84,7 +80,6 @@ export class SchedulerService implements OnModuleInit {
          payload.cityId = config.location.id;
        }
     } else if (config.locationId) {
-        // Fallback if not loaded
       payload.locationId = config.locationId;
       payload.cityId = config.locationId; 
     }
