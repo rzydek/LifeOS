@@ -5,15 +5,14 @@
     <p class="text-muted-foreground mt-2">Automated OLX market monitoring and deal analysis.</p>
   </div>
 
-  <hlm-tabs tab="results" class="flex-1 flex flex-col overflow-hidden">
-    <hlm-tabs-list class="w-full justify-start mb-6 border-b rounded-none p-0 bg-transparent gap-6">
-       <button hlmTabsTrigger="results" class="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-2 pb-2 transition-none">Sniper Results</button>
-       <button hlmTabsTrigger="config" class="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-2 pb-2 transition-none">Search Configuration</button>
+  <hlm-tabs tab="results" class="gap-4">
+    <hlm-tabs-list variant="line">
+       <button hlmTabsTrigger="results">Sniper Results</button>
+       <button hlmTabsTrigger="config">Search Configuration</button>
     </hlm-tabs-list>
 
     <div hlmTabsContent="results" class="flex-1 flex flex-col min-h-0">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full pb-6">
-            <!-- Left Side: Config List & Filters -->
             <div class="lg:col-span-3 flex flex-col gap-6 overflow-y-auto pr-2">
                  
                  <div class="rounded-xl border bg-card text-card-foreground shadow-sm overflow-hidden">
@@ -21,13 +20,13 @@
                         <h3 class="font-semibold">Search Configs</h3>
                     </div>
                     <div class="p-2 space-y-1">
-                        <button hlmBtn variant="ghost" class="w-full justify-start font-normal text-left" 
+                        <button hlmBtn variant="ghost" class="w-full justify-start font-normal text-left cursor-pointer" 
                                 [ngClass]="{'bg-accent text-accent-foreground font-medium': !selectedConfigId()}"
                                 (click)="selectConfig(undefined)">
                             All Configs
                         </button>
                         @for (config of configs(); track config.id) {
-                            <button hlmBtn variant="ghost" class="w-full justify-start font-normal text-left truncate block" 
+                            <button hlmBtn variant="ghost" class="w-full justify-start font-normal text-left truncate block cursor-pointer" 
                                     [ngClass]="{'bg-accent text-accent-foreground font-medium': selectedConfigId() === config.id}"
                                     (click)="selectConfig(config.id)"
                                     title="{{ config.query }}">
@@ -51,7 +50,6 @@
 
             </div>
 
-            <!-- Main Content: Results -->
             <div class="lg:col-span-9 h-full min-h-0 flex flex-col">
               <lifeos-results-grid [configId]="selectedConfigId()" [minScore]="minScore()" class="block w-full h-full"></lifeos-results-grid>
             </div>

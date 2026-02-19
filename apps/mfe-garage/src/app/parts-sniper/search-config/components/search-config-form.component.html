@@ -1,0 +1,130 @@
+<div class="p-4 bg-muted/50 border-t">
+    <h3
+        class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3"
+    >
+        Add New Search
+    </h3>
+    <div class="space-y-3">
+        <div>
+            <input
+                hlmInput
+                [ngModel]="newConfig().query"
+                (ngModelChange)="setQuery($event)"
+                placeholder="Search Query (e.g. E55 AMG)"
+                class="w-full bg-background"
+            />
+        </div>
+
+        <div class="flex flex-col gap-3">
+            <div class="flex gap-2 w-full">
+                <brn-select
+                    class="inline-block w-full"
+                    [ngModel]="newConfig().categoryId"
+                    (ngModelChange)="setCategoryId($event)"
+                >
+                    <hlm-select-trigger class="w-full">
+                        <hlm-select-value class="w-full"></hlm-select-value>
+                    </hlm-select-trigger>
+                    <hlm-select-content>
+                        <hlm-option value="">
+                            <span>Any Category</span>
+                        </hlm-option>
+                        @for (cat of categories(); track cat.id) {
+                            <hlm-option [value]="cat.id">{{
+                                cat.name
+                            }}</hlm-option>
+                        }
+                    </hlm-select-content>
+                </brn-select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <brn-select
+                    class="inline-block w-full"
+                    [ngModel]="selectedRegionId()"
+                    (ngModelChange)="setRegionId($event)"
+                >
+                    <hlm-select-trigger class="w-full">
+                        <hlm-select-value class="w-full"></hlm-select-value>
+                    </hlm-select-trigger>
+                    <hlm-select-content>
+                        <hlm-option value="">
+                            <span>Any Region</span>
+                        </hlm-option>
+                        @for (reg of regions(); track reg.id) {
+                            <hlm-option [value]="reg.id">{{
+                                reg.name
+                            }}</hlm-option>
+                        }
+                    </hlm-select-content>
+                </brn-select>
+
+                <brn-select
+                    [disabled]="!selectedRegionId()"
+                    class="inline-block w-full"
+                    [ngModel]="selectedCityId()"
+                    (ngModelChange)="setCityId($event)"
+                >
+                    <hlm-select-trigger class="w-full">
+                        <hlm-select-value class="w-full"></hlm-select-value>
+                    </hlm-select-trigger>
+                    <hlm-select-content>
+                        <hlm-option value="">
+                            <span>Any City</span>
+                        </hlm-option>
+                        @for (city of filteredCities(); track city.id) {
+                            <hlm-option [value]="city.id">{{
+                                city.name
+                            }}</hlm-option>
+                        }
+                    </hlm-select-content>
+                </brn-select>
+            </div>
+
+            @if (selectedCityId()) {
+                <div class="flex items-center gap-2">
+                    <span
+                        class="text-xs text-muted-foreground whitespace-nowrap"
+                        >Dist (km):</span
+                    >
+                    <div class="flex flex-wrap gap-1">
+                        @for (rad of radii; track rad) {
+                            <button
+                                type="button"
+                                (click)="setRadius(rad)"
+                                [ngClass]="{
+                                    'bg-primary text-primary-foreground hover:bg-primary/90': newConfig().radius === rad,
+                                    'hover:bg-muted': newConfig().radius !== rad
+                                }"
+                                class="px-2 py-1 text-xs border rounded transition-colors"
+                            >
+                                {{ rad }}
+                            </button>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="flex justify-end gap-2">
+                <button
+                    hlmBtn
+                    variant="ghost"
+                    size="sm"
+                    (click)="openLocationDialog.emit()"
+                    class="text-xs"
+                >
+                    Manage Locations...
+                </button>
+            </div>
+        </div>
+
+        <button
+            hlmBtn
+            (click)="add()"
+            [disabled]="!newConfig().query"
+            class="w-full"
+        >
+            Monitor Query
+        </button>
+    </div>
+</div>

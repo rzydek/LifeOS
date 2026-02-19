@@ -1,0 +1,40 @@
+<hlm-dialog [state]="state()" (closed)="closeDialog()">
+  <hlm-dialog-content *brnDialogContent="let ctx">
+    <hlm-dialog-header>
+      <h3 hlmDialogTitle>Add New Location</h3>
+      <p hlmDialogDescription>Enter the location details from the OLX URL.</p>
+    </hlm-dialog-header>
+    <div class="grid gap-4 py-4">
+      <div class="grid grid-cols-4 items-center gap-4">
+        <label hlmLabel for="loc-id" class="text-right">ID</label>
+        <input hlmInput id="loc-id" [ngModel]="newLocation().id" (ngModelChange)="setNewLocationId($event)" class="col-span-3" />
+      </div>
+      <div class="grid grid-cols-4 items-center gap-4">
+        <label hlmLabel for="loc-name" class="text-right">Name</label>
+        <input hlmInput id="loc-name" [ngModel]="newLocation().name" (ngModelChange)="setNewLocationName($event)" class="col-span-3" />
+      </div>
+      <div class="grid grid-cols-4 items-center gap-4">
+        <label hlmLabel for="loc-type" class="text-right">Type</label>
+        <select hlmInput id="loc-type" [ngModel]="newLocation().type" (ngModelChange)="setNewLocationType($event)" class="col-span-3 bg-background">
+            <option value="region">Region</option>
+            <option value="city">City</option>
+        </select>
+      </div>
+      @if (newLocation().type === 'city') {
+          <div class="grid grid-cols-4 items-center gap-4">
+            <label hlmLabel for="loc-parent" class="text-right">Region</label>
+            <select hlmInput id="loc-parent" [ngModel]="newLocation().parentId" (ngModelChange)="setNewLocationParent($event)" class="col-span-3 bg-background">
+                <option value="">None / Unknown</option>
+                @for (reg of regions(); track reg.id) {
+                    <option [value]="reg.id">{{ reg.name }}</option>
+                }
+            </select>
+          </div>
+      }
+    </div>
+    <hlm-dialog-footer>
+       <button hlmBtn variant="ghost" (click)="closeDialog()">Cancel</button>
+      <button hlmBtn (click)="save()">Save Location</button>
+    </hlm-dialog-footer>
+  </hlm-dialog-content>
+</hlm-dialog>

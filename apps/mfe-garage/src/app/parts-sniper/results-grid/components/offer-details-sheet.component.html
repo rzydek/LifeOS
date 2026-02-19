@@ -1,0 +1,53 @@
+<hlm-sheet side="right" #sheetRef>
+    <ng-content></ng-content>
+    <hlm-sheet-content *hlmSheetPortal="let ctx">
+        <hlm-sheet-header>
+            <div hlmSheetTitle>{{ offer()?.title }}</div>
+        </hlm-sheet-header>
+        
+        <div class="px-4 gap-4 flex flex-col overflow-y-auto max-h-[calc(100vh-120px)]">
+             <div class="flex justify-between items-center py-2 border-b">
+                 <span class="text-muted-foreground">Price</span>
+                 <span class="text-xl font-bold font-mono">{{ offer()?.priceHistory?.[0]?.price | currency:offer()?.priceHistory?.[0]?.currency:'symbol':'1.0-0' }}</span>
+             </div>
+
+             <div class="space-y-2">
+                 <h4 class="font-medium">AI Analysis</h4>
+                 <div class="p-4 rounded-lg border bg-muted/40 text-sm leading-relaxed" [ngClass]="getScoreClass(offer()?.aiScore || 0)">
+                     <div class="flex items-center justify-between mb-2">
+                         <span class="font-bold">Deal Score</span>
+                         <span class="text-lg font-bold">{{ offer()?.aiScore }}/100</span>
+                     </div>
+                     <p>{{ offer()?.aiReasoning }}</p>
+                 </div>
+             </div>
+
+             <div class="space-y-2">
+                <h4 class="font-medium">Details</h4>
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                    <div class="text-muted-foreground">Detected</div>
+                    <div class="text-right">{{ offer()?.detectedAt | date:'medium' }}</div>
+                    
+                    <div class="text-muted-foreground">Last Seen</div>
+                    <div class="text-right">{{ offer()?.lastSeenAt | date:'medium' }}</div>
+                    
+                    <div class="text-muted-foreground">Offer ID</div>
+                    <div class="text-right font-mono text-xs truncate" title="{{ offer()?.externalId }}">{{ offer()?.externalId }}</div>
+                </div>
+             </div>
+
+             @if (offer()?.description) {
+                 <div class="space-y-2">
+                     <h4 class="font-medium">Description</h4>
+                     <p class="text-sm text-muted-foreground whitespace-pre-wrap">{{ offer()?.description }}</p>
+                 </div>
+             }
+        </div>
+
+        <hlm-sheet-footer>
+             <a hlmBtn class="w-full sm:w-auto" [href]="offer()?.url" target="_blank">
+                Open on OLX <ng-icon hlmIcon name="lucideExternalLink" size="sm" class="ml-2 h-4 w-4" />
+             </a>
+        </hlm-sheet-footer>
+    </hlm-sheet-content>
+</hlm-sheet>

@@ -12,7 +12,7 @@ export default [
                 'error',
                 {
                     type: 'attribute',
-                    prefix: 'lifeos',
+                    prefix: 'app',
                     style: 'camelCase',
                 },
             ],
@@ -20,7 +20,7 @@ export default [
                 'error',
                 {
                     type: 'element',
-                    prefix: 'lifeos',
+                    prefix: 'app',
                     style: 'kebab-case',
                 },
             ],

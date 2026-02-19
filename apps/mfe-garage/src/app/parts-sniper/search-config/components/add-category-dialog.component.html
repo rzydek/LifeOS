@@ -1,0 +1,22 @@
+<hlm-dialog [state]="state()" (closed)="closeDialog()">
+  <hlm-dialog-content *brnDialogContent="let ctx">
+    <hlm-dialog-header>
+      <h3 hlmDialogTitle>Add New Category</h3>
+      <p hlmDialogDescription>Enter the category details from the OLX URL.</p>
+    </hlm-dialog-header>
+    <div class="grid gap-4 py-4">
+      <div class="grid grid-cols-4 items-center gap-4">
+        <label hlmLabel for="cat-id" class="text-right">ID</label>
+        <input hlmInput id="cat-id" [ngModel]="newCategory().id" (ngModelChange)="setNewCategoryId($event)" class="col-span-3" />
+      </div>
+      <div class="grid grid-cols-4 items-center gap-4">
+        <label hlmLabel for="cat-name" class="text-right">Name</label>
+        <input hlmInput id="cat-name" [ngModel]="newCategory().name" (ngModelChange)="setNewCategoryName($event)" class="col-span-3" />
+      </div>
+    </div>
+    <hlm-dialog-footer>
+       <button hlmBtn variant="ghost" (click)="closeDialog()">Cancel</button>
+      <button hlmBtn (click)="save()">Save Category</button>
+    </hlm-dialog-footer>
+  </hlm-dialog-content>
+</hlm-dialog>
