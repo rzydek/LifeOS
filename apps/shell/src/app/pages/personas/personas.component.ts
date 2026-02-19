@@ -1,5 +1,4 @@
-// apps/shell/src/app/pages/personas/personas.component.ts
-import { Component, inject, signal, viewChild, ViewChild } from '@angular/core';
+import { Component, inject, signal, viewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PersonasService, Persona } from './personas.service';
@@ -10,10 +9,13 @@ import { provideIcons } from '@ng-icons/core';
 import { lucidePlus, lucidePencil, lucideTrash } from '@ng-icons/lucide';
 import { HlmInputImports } from '@spartan-ng/helm/input';
 import { HlmLabelImports } from '@spartan-ng/helm/label';
+import { HlmCheckboxImports } from '@spartan-ng/helm/checkbox';
+import { HlmTextareaImports } from '@spartan-ng/helm/textarea';
+import { HlmFormFieldImports } from '@spartan-ng/helm/form-field';
 import { TranslatePipe } from '@lifeos-nexus/ui';
 
 @Component({
-  selector: 'lifeos-personas',
+  selector: 'app-personas',
   standalone: true,
   imports: [
     CommonModule, 
@@ -23,12 +25,15 @@ import { TranslatePipe } from '@lifeos-nexus/ui';
     HlmIconImports,
     HlmInputImports,
     HlmLabelImports,
+    HlmCheckboxImports,
+    HlmTextareaImports,
+    HlmFormFieldImports,
     TranslatePipe
   ],
   providers: [provideIcons({ lucidePlus, lucidePencil, lucideTrash })],
   templateUrl: './personas.component.html'
 })
-export class PersonasComponent {
+export class PersonasComponent implements OnInit {
   private service = inject(PersonasService);
   
   personas = signal<Persona[]>([]);
