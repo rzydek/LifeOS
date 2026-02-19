@@ -27,23 +27,19 @@ export type AggregateSearchConfig = {
 }
 
 export type SearchConfigAvgAggregateOutputType = {
-  radius: number | null
   checkInterval: number | null
   userId: number | null
 }
 
 export type SearchConfigSumAggregateOutputType = {
-  radius: number | null
   checkInterval: number | null
   userId: number | null
 }
 
 export type SearchConfigMinAggregateOutputType = {
   id: string | null
+  source: string | null
   query: string | null
-  categoryId: string | null
-  locationId: string | null
-  radius: number | null
   isActive: boolean | null
   lastRunAt: Date | null
   checkInterval: number | null
@@ -54,10 +50,8 @@ export type SearchConfigMinAggregateOutputType = {
 
 export type SearchConfigMaxAggregateOutputType = {
   id: string | null
+  source: string | null
   query: string | null
-  categoryId: string | null
-  locationId: string | null
-  radius: number | null
   isActive: boolean | null
   lastRunAt: Date | null
   checkInterval: number | null
@@ -68,10 +62,9 @@ export type SearchConfigMaxAggregateOutputType = {
 
 export type SearchConfigCountAggregateOutputType = {
   id: number
+  source: number
   query: number
-  categoryId: number
-  locationId: number
-  radius: number
+  parameters: number
   isActive: number
   lastRunAt: number
   checkInterval: number
@@ -83,23 +76,19 @@ export type SearchConfigCountAggregateOutputType = {
 
 
 export type SearchConfigAvgAggregateInputType = {
-  radius?: true
   checkInterval?: true
   userId?: true
 }
 
 export type SearchConfigSumAggregateInputType = {
-  radius?: true
   checkInterval?: true
   userId?: true
 }
 
 export type SearchConfigMinAggregateInputType = {
   id?: true
+  source?: true
   query?: true
-  categoryId?: true
-  locationId?: true
-  radius?: true
   isActive?: true
   lastRunAt?: true
   checkInterval?: true
@@ -110,10 +99,8 @@ export type SearchConfigMinAggregateInputType = {
 
 export type SearchConfigMaxAggregateInputType = {
   id?: true
+  source?: true
   query?: true
-  categoryId?: true
-  locationId?: true
-  radius?: true
   isActive?: true
   lastRunAt?: true
   checkInterval?: true
@@ -124,10 +111,9 @@ export type SearchConfigMaxAggregateInputType = {
 
 export type SearchConfigCountAggregateInputType = {
   id?: true
+  source?: true
   query?: true
-  categoryId?: true
-  locationId?: true
-  radius?: true
+  parameters?: true
   isActive?: true
   lastRunAt?: true
   checkInterval?: true
@@ -225,10 +211,9 @@ export type SearchConfigGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 
 export type SearchConfigGroupByOutputType = {
   id: string
+  source: string
   query: string
-  categoryId: string | null
-  locationId: string | null
-  radius: number
+  parameters: runtime.JsonValue
   isActive: boolean
   lastRunAt: Date | null
   checkInterval: number
@@ -262,36 +247,30 @@ export type SearchConfigWhereInput = {
   OR?: Prisma.SearchConfigWhereInput[]
   NOT?: Prisma.SearchConfigWhereInput | Prisma.SearchConfigWhereInput[]
   id?: Prisma.StringFilter<"SearchConfig"> | string
+  source?: Prisma.StringFilter<"SearchConfig"> | string
   query?: Prisma.StringFilter<"SearchConfig"> | string
-  categoryId?: Prisma.StringNullableFilter<"SearchConfig"> | string | null
-  locationId?: Prisma.StringNullableFilter<"SearchConfig"> | string | null
-  radius?: Prisma.IntFilter<"SearchConfig"> | number
+  parameters?: Prisma.JsonFilter<"SearchConfig">
   isActive?: Prisma.BoolFilter<"SearchConfig"> | boolean
   lastRunAt?: Prisma.DateTimeNullableFilter<"SearchConfig"> | Date | string | null
   checkInterval?: Prisma.IntFilter<"SearchConfig"> | number
   userId?: Prisma.IntFilter<"SearchConfig"> | number
   createdAt?: Prisma.DateTimeFilter<"SearchConfig"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SearchConfig"> | Date | string
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
-  location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   offers?: Prisma.ScrapedOfferListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type SearchConfigOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
-  locationId?: Prisma.SortOrderInput | Prisma.SortOrder
-  radius?: Prisma.SortOrder
+  parameters?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastRunAt?: Prisma.SortOrderInput | Prisma.SortOrder
   checkInterval?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  category?: Prisma.CategoryOrderByWithRelationInput
-  location?: Prisma.LocationOrderByWithRelationInput
   offers?: Prisma.ScrapedOfferOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -301,28 +280,24 @@ export type SearchConfigWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SearchConfigWhereInput | Prisma.SearchConfigWhereInput[]
   OR?: Prisma.SearchConfigWhereInput[]
   NOT?: Prisma.SearchConfigWhereInput | Prisma.SearchConfigWhereInput[]
+  source?: Prisma.StringFilter<"SearchConfig"> | string
   query?: Prisma.StringFilter<"SearchConfig"> | string
-  categoryId?: Prisma.StringNullableFilter<"SearchConfig"> | string | null
-  locationId?: Prisma.StringNullableFilter<"SearchConfig"> | string | null
-  radius?: Prisma.IntFilter<"SearchConfig"> | number
+  parameters?: Prisma.JsonFilter<"SearchConfig">
   isActive?: Prisma.BoolFilter<"SearchConfig"> | boolean
   lastRunAt?: Prisma.DateTimeNullableFilter<"SearchConfig"> | Date | string | null
   checkInterval?: Prisma.IntFilter<"SearchConfig"> | number
   userId?: Prisma.IntFilter<"SearchConfig"> | number
   createdAt?: Prisma.DateTimeFilter<"SearchConfig"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SearchConfig"> | Date | string
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
-  location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   offers?: Prisma.ScrapedOfferListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type SearchConfigOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
-  locationId?: Prisma.SortOrderInput | Prisma.SortOrder
-  radius?: Prisma.SortOrder
+  parameters?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastRunAt?: Prisma.SortOrderInput | Prisma.SortOrder
   checkInterval?: Prisma.SortOrder
@@ -341,10 +316,9 @@ export type SearchConfigScalarWhereWithAggregatesInput = {
   OR?: Prisma.SearchConfigScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SearchConfigScalarWhereWithAggregatesInput | Prisma.SearchConfigScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"SearchConfig"> | string
+  source?: Prisma.StringWithAggregatesFilter<"SearchConfig"> | string
   query?: Prisma.StringWithAggregatesFilter<"SearchConfig"> | string
-  categoryId?: Prisma.StringNullableWithAggregatesFilter<"SearchConfig"> | string | null
-  locationId?: Prisma.StringNullableWithAggregatesFilter<"SearchConfig"> | string | null
-  radius?: Prisma.IntWithAggregatesFilter<"SearchConfig"> | number
+  parameters?: Prisma.JsonWithAggregatesFilter<"SearchConfig">
   isActive?: Prisma.BoolWithAggregatesFilter<"SearchConfig"> | boolean
   lastRunAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SearchConfig"> | Date | string | null
   checkInterval?: Prisma.IntWithAggregatesFilter<"SearchConfig"> | number
@@ -355,25 +329,23 @@ export type SearchConfigScalarWhereWithAggregatesInput = {
 
 export type SearchConfigCreateInput = {
   id?: string
+  source?: string
   query: string
-  radius?: number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   lastRunAt?: Date | string | null
   checkInterval?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  category?: Prisma.CategoryCreateNestedOneWithoutSearchesInput
-  location?: Prisma.LocationCreateNestedOneWithoutSearchesInput
   offers?: Prisma.ScrapedOfferCreateNestedManyWithoutSearchConfigInput
   user: Prisma.UserCreateNestedOneWithoutSearchConfigsInput
 }
 
 export type SearchConfigUncheckedCreateInput = {
   id?: string
+  source?: string
   query: string
-  categoryId?: string | null
-  locationId?: string | null
-  radius?: number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   lastRunAt?: Date | string | null
   checkInterval?: number
@@ -385,25 +357,23 @@ export type SearchConfigUncheckedCreateInput = {
 
 export type SearchConfigUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneWithoutSearchesNestedInput
-  location?: Prisma.LocationUpdateOneWithoutSearchesNestedInput
   offers?: Prisma.ScrapedOfferUpdateManyWithoutSearchConfigNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutSearchConfigsNestedInput
 }
 
 export type SearchConfigUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
@@ -415,10 +385,9 @@ export type SearchConfigUncheckedUpdateInput = {
 
 export type SearchConfigCreateManyInput = {
   id?: string
+  source?: string
   query: string
-  categoryId?: string | null
-  locationId?: string | null
-  radius?: number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   lastRunAt?: Date | string | null
   checkInterval?: number
@@ -429,8 +398,9 @@ export type SearchConfigCreateManyInput = {
 
 export type SearchConfigUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
@@ -440,10 +410,9 @@ export type SearchConfigUpdateManyMutationInput = {
 
 export type SearchConfigUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
@@ -464,10 +433,9 @@ export type SearchConfigOrderByRelationAggregateInput = {
 
 export type SearchConfigCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  locationId?: Prisma.SortOrder
-  radius?: Prisma.SortOrder
+  parameters?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastRunAt?: Prisma.SortOrder
   checkInterval?: Prisma.SortOrder
@@ -477,17 +445,14 @@ export type SearchConfigCountOrderByAggregateInput = {
 }
 
 export type SearchConfigAvgOrderByAggregateInput = {
-  radius?: Prisma.SortOrder
   checkInterval?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
 export type SearchConfigMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  locationId?: Prisma.SortOrder
-  radius?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastRunAt?: Prisma.SortOrder
   checkInterval?: Prisma.SortOrder
@@ -498,10 +463,8 @@ export type SearchConfigMaxOrderByAggregateInput = {
 
 export type SearchConfigMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  locationId?: Prisma.SortOrder
-  radius?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lastRunAt?: Prisma.SortOrder
   checkInterval?: Prisma.SortOrder
@@ -511,7 +474,6 @@ export type SearchConfigMinOrderByAggregateInput = {
 }
 
 export type SearchConfigSumOrderByAggregateInput = {
-  radius?: Prisma.SortOrder
   checkInterval?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -563,90 +525,6 @@ export type SearchConfigUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.SearchConfigScalarWhereInput | Prisma.SearchConfigScalarWhereInput[]
 }
 
-export type SearchConfigCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.SearchConfigCreateWithoutCategoryInput, Prisma.SearchConfigUncheckedCreateWithoutCategoryInput> | Prisma.SearchConfigCreateWithoutCategoryInput[] | Prisma.SearchConfigUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.SearchConfigCreateOrConnectWithoutCategoryInput | Prisma.SearchConfigCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.SearchConfigCreateManyCategoryInputEnvelope
-  connect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-}
-
-export type SearchConfigUncheckedCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.SearchConfigCreateWithoutCategoryInput, Prisma.SearchConfigUncheckedCreateWithoutCategoryInput> | Prisma.SearchConfigCreateWithoutCategoryInput[] | Prisma.SearchConfigUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.SearchConfigCreateOrConnectWithoutCategoryInput | Prisma.SearchConfigCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.SearchConfigCreateManyCategoryInputEnvelope
-  connect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-}
-
-export type SearchConfigUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.SearchConfigCreateWithoutCategoryInput, Prisma.SearchConfigUncheckedCreateWithoutCategoryInput> | Prisma.SearchConfigCreateWithoutCategoryInput[] | Prisma.SearchConfigUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.SearchConfigCreateOrConnectWithoutCategoryInput | Prisma.SearchConfigCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.SearchConfigUpsertWithWhereUniqueWithoutCategoryInput | Prisma.SearchConfigUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.SearchConfigCreateManyCategoryInputEnvelope
-  set?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  disconnect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  delete?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  connect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  update?: Prisma.SearchConfigUpdateWithWhereUniqueWithoutCategoryInput | Prisma.SearchConfigUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.SearchConfigUpdateManyWithWhereWithoutCategoryInput | Prisma.SearchConfigUpdateManyWithWhereWithoutCategoryInput[]
-  deleteMany?: Prisma.SearchConfigScalarWhereInput | Prisma.SearchConfigScalarWhereInput[]
-}
-
-export type SearchConfigUncheckedUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.SearchConfigCreateWithoutCategoryInput, Prisma.SearchConfigUncheckedCreateWithoutCategoryInput> | Prisma.SearchConfigCreateWithoutCategoryInput[] | Prisma.SearchConfigUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.SearchConfigCreateOrConnectWithoutCategoryInput | Prisma.SearchConfigCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.SearchConfigUpsertWithWhereUniqueWithoutCategoryInput | Prisma.SearchConfigUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.SearchConfigCreateManyCategoryInputEnvelope
-  set?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  disconnect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  delete?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  connect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  update?: Prisma.SearchConfigUpdateWithWhereUniqueWithoutCategoryInput | Prisma.SearchConfigUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.SearchConfigUpdateManyWithWhereWithoutCategoryInput | Prisma.SearchConfigUpdateManyWithWhereWithoutCategoryInput[]
-  deleteMany?: Prisma.SearchConfigScalarWhereInput | Prisma.SearchConfigScalarWhereInput[]
-}
-
-export type SearchConfigCreateNestedManyWithoutLocationInput = {
-  create?: Prisma.XOR<Prisma.SearchConfigCreateWithoutLocationInput, Prisma.SearchConfigUncheckedCreateWithoutLocationInput> | Prisma.SearchConfigCreateWithoutLocationInput[] | Prisma.SearchConfigUncheckedCreateWithoutLocationInput[]
-  connectOrCreate?: Prisma.SearchConfigCreateOrConnectWithoutLocationInput | Prisma.SearchConfigCreateOrConnectWithoutLocationInput[]
-  createMany?: Prisma.SearchConfigCreateManyLocationInputEnvelope
-  connect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-}
-
-export type SearchConfigUncheckedCreateNestedManyWithoutLocationInput = {
-  create?: Prisma.XOR<Prisma.SearchConfigCreateWithoutLocationInput, Prisma.SearchConfigUncheckedCreateWithoutLocationInput> | Prisma.SearchConfigCreateWithoutLocationInput[] | Prisma.SearchConfigUncheckedCreateWithoutLocationInput[]
-  connectOrCreate?: Prisma.SearchConfigCreateOrConnectWithoutLocationInput | Prisma.SearchConfigCreateOrConnectWithoutLocationInput[]
-  createMany?: Prisma.SearchConfigCreateManyLocationInputEnvelope
-  connect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-}
-
-export type SearchConfigUpdateManyWithoutLocationNestedInput = {
-  create?: Prisma.XOR<Prisma.SearchConfigCreateWithoutLocationInput, Prisma.SearchConfigUncheckedCreateWithoutLocationInput> | Prisma.SearchConfigCreateWithoutLocationInput[] | Prisma.SearchConfigUncheckedCreateWithoutLocationInput[]
-  connectOrCreate?: Prisma.SearchConfigCreateOrConnectWithoutLocationInput | Prisma.SearchConfigCreateOrConnectWithoutLocationInput[]
-  upsert?: Prisma.SearchConfigUpsertWithWhereUniqueWithoutLocationInput | Prisma.SearchConfigUpsertWithWhereUniqueWithoutLocationInput[]
-  createMany?: Prisma.SearchConfigCreateManyLocationInputEnvelope
-  set?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  disconnect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  delete?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  connect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  update?: Prisma.SearchConfigUpdateWithWhereUniqueWithoutLocationInput | Prisma.SearchConfigUpdateWithWhereUniqueWithoutLocationInput[]
-  updateMany?: Prisma.SearchConfigUpdateManyWithWhereWithoutLocationInput | Prisma.SearchConfigUpdateManyWithWhereWithoutLocationInput[]
-  deleteMany?: Prisma.SearchConfigScalarWhereInput | Prisma.SearchConfigScalarWhereInput[]
-}
-
-export type SearchConfigUncheckedUpdateManyWithoutLocationNestedInput = {
-  create?: Prisma.XOR<Prisma.SearchConfigCreateWithoutLocationInput, Prisma.SearchConfigUncheckedCreateWithoutLocationInput> | Prisma.SearchConfigCreateWithoutLocationInput[] | Prisma.SearchConfigUncheckedCreateWithoutLocationInput[]
-  connectOrCreate?: Prisma.SearchConfigCreateOrConnectWithoutLocationInput | Prisma.SearchConfigCreateOrConnectWithoutLocationInput[]
-  upsert?: Prisma.SearchConfigUpsertWithWhereUniqueWithoutLocationInput | Prisma.SearchConfigUpsertWithWhereUniqueWithoutLocationInput[]
-  createMany?: Prisma.SearchConfigCreateManyLocationInputEnvelope
-  set?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  disconnect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  delete?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  connect?: Prisma.SearchConfigWhereUniqueInput | Prisma.SearchConfigWhereUniqueInput[]
-  update?: Prisma.SearchConfigUpdateWithWhereUniqueWithoutLocationInput | Prisma.SearchConfigUpdateWithWhereUniqueWithoutLocationInput[]
-  updateMany?: Prisma.SearchConfigUpdateManyWithWhereWithoutLocationInput | Prisma.SearchConfigUpdateManyWithWhereWithoutLocationInput[]
-  deleteMany?: Prisma.SearchConfigScalarWhereInput | Prisma.SearchConfigScalarWhereInput[]
-}
-
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -671,24 +549,22 @@ export type SearchConfigUpdateOneRequiredWithoutOffersNestedInput = {
 
 export type SearchConfigCreateWithoutUserInput = {
   id?: string
+  source?: string
   query: string
-  radius?: number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   lastRunAt?: Date | string | null
   checkInterval?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  category?: Prisma.CategoryCreateNestedOneWithoutSearchesInput
-  location?: Prisma.LocationCreateNestedOneWithoutSearchesInput
   offers?: Prisma.ScrapedOfferCreateNestedManyWithoutSearchConfigInput
 }
 
 export type SearchConfigUncheckedCreateWithoutUserInput = {
   id?: string
+  source?: string
   query: string
-  categoryId?: string | null
-  locationId?: string | null
-  radius?: number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   lastRunAt?: Date | string | null
   checkInterval?: number
@@ -728,10 +604,9 @@ export type SearchConfigScalarWhereInput = {
   OR?: Prisma.SearchConfigScalarWhereInput[]
   NOT?: Prisma.SearchConfigScalarWhereInput | Prisma.SearchConfigScalarWhereInput[]
   id?: Prisma.StringFilter<"SearchConfig"> | string
+  source?: Prisma.StringFilter<"SearchConfig"> | string
   query?: Prisma.StringFilter<"SearchConfig"> | string
-  categoryId?: Prisma.StringNullableFilter<"SearchConfig"> | string | null
-  locationId?: Prisma.StringNullableFilter<"SearchConfig"> | string | null
-  radius?: Prisma.IntFilter<"SearchConfig"> | number
+  parameters?: Prisma.JsonFilter<"SearchConfig">
   isActive?: Prisma.BoolFilter<"SearchConfig"> | boolean
   lastRunAt?: Prisma.DateTimeNullableFilter<"SearchConfig"> | Date | string | null
   checkInterval?: Prisma.IntFilter<"SearchConfig"> | number
@@ -740,134 +615,24 @@ export type SearchConfigScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"SearchConfig"> | Date | string
 }
 
-export type SearchConfigCreateWithoutCategoryInput = {
-  id?: string
-  query: string
-  radius?: number
-  isActive?: boolean
-  lastRunAt?: Date | string | null
-  checkInterval?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutSearchesInput
-  offers?: Prisma.ScrapedOfferCreateNestedManyWithoutSearchConfigInput
-  user: Prisma.UserCreateNestedOneWithoutSearchConfigsInput
-}
-
-export type SearchConfigUncheckedCreateWithoutCategoryInput = {
-  id?: string
-  query: string
-  locationId?: string | null
-  radius?: number
-  isActive?: boolean
-  lastRunAt?: Date | string | null
-  checkInterval?: number
-  userId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  offers?: Prisma.ScrapedOfferUncheckedCreateNestedManyWithoutSearchConfigInput
-}
-
-export type SearchConfigCreateOrConnectWithoutCategoryInput = {
-  where: Prisma.SearchConfigWhereUniqueInput
-  create: Prisma.XOR<Prisma.SearchConfigCreateWithoutCategoryInput, Prisma.SearchConfigUncheckedCreateWithoutCategoryInput>
-}
-
-export type SearchConfigCreateManyCategoryInputEnvelope = {
-  data: Prisma.SearchConfigCreateManyCategoryInput | Prisma.SearchConfigCreateManyCategoryInput[]
-  skipDuplicates?: boolean
-}
-
-export type SearchConfigUpsertWithWhereUniqueWithoutCategoryInput = {
-  where: Prisma.SearchConfigWhereUniqueInput
-  update: Prisma.XOR<Prisma.SearchConfigUpdateWithoutCategoryInput, Prisma.SearchConfigUncheckedUpdateWithoutCategoryInput>
-  create: Prisma.XOR<Prisma.SearchConfigCreateWithoutCategoryInput, Prisma.SearchConfigUncheckedCreateWithoutCategoryInput>
-}
-
-export type SearchConfigUpdateWithWhereUniqueWithoutCategoryInput = {
-  where: Prisma.SearchConfigWhereUniqueInput
-  data: Prisma.XOR<Prisma.SearchConfigUpdateWithoutCategoryInput, Prisma.SearchConfigUncheckedUpdateWithoutCategoryInput>
-}
-
-export type SearchConfigUpdateManyWithWhereWithoutCategoryInput = {
-  where: Prisma.SearchConfigScalarWhereInput
-  data: Prisma.XOR<Prisma.SearchConfigUpdateManyMutationInput, Prisma.SearchConfigUncheckedUpdateManyWithoutCategoryInput>
-}
-
-export type SearchConfigCreateWithoutLocationInput = {
-  id?: string
-  query: string
-  radius?: number
-  isActive?: boolean
-  lastRunAt?: Date | string | null
-  checkInterval?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  category?: Prisma.CategoryCreateNestedOneWithoutSearchesInput
-  offers?: Prisma.ScrapedOfferCreateNestedManyWithoutSearchConfigInput
-  user: Prisma.UserCreateNestedOneWithoutSearchConfigsInput
-}
-
-export type SearchConfigUncheckedCreateWithoutLocationInput = {
-  id?: string
-  query: string
-  categoryId?: string | null
-  radius?: number
-  isActive?: boolean
-  lastRunAt?: Date | string | null
-  checkInterval?: number
-  userId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  offers?: Prisma.ScrapedOfferUncheckedCreateNestedManyWithoutSearchConfigInput
-}
-
-export type SearchConfigCreateOrConnectWithoutLocationInput = {
-  where: Prisma.SearchConfigWhereUniqueInput
-  create: Prisma.XOR<Prisma.SearchConfigCreateWithoutLocationInput, Prisma.SearchConfigUncheckedCreateWithoutLocationInput>
-}
-
-export type SearchConfigCreateManyLocationInputEnvelope = {
-  data: Prisma.SearchConfigCreateManyLocationInput | Prisma.SearchConfigCreateManyLocationInput[]
-  skipDuplicates?: boolean
-}
-
-export type SearchConfigUpsertWithWhereUniqueWithoutLocationInput = {
-  where: Prisma.SearchConfigWhereUniqueInput
-  update: Prisma.XOR<Prisma.SearchConfigUpdateWithoutLocationInput, Prisma.SearchConfigUncheckedUpdateWithoutLocationInput>
-  create: Prisma.XOR<Prisma.SearchConfigCreateWithoutLocationInput, Prisma.SearchConfigUncheckedCreateWithoutLocationInput>
-}
-
-export type SearchConfigUpdateWithWhereUniqueWithoutLocationInput = {
-  where: Prisma.SearchConfigWhereUniqueInput
-  data: Prisma.XOR<Prisma.SearchConfigUpdateWithoutLocationInput, Prisma.SearchConfigUncheckedUpdateWithoutLocationInput>
-}
-
-export type SearchConfigUpdateManyWithWhereWithoutLocationInput = {
-  where: Prisma.SearchConfigScalarWhereInput
-  data: Prisma.XOR<Prisma.SearchConfigUpdateManyMutationInput, Prisma.SearchConfigUncheckedUpdateManyWithoutLocationInput>
-}
-
 export type SearchConfigCreateWithoutOffersInput = {
   id?: string
+  source?: string
   query: string
-  radius?: number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   lastRunAt?: Date | string | null
   checkInterval?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  category?: Prisma.CategoryCreateNestedOneWithoutSearchesInput
-  location?: Prisma.LocationCreateNestedOneWithoutSearchesInput
   user: Prisma.UserCreateNestedOneWithoutSearchConfigsInput
 }
 
 export type SearchConfigUncheckedCreateWithoutOffersInput = {
   id?: string
+  source?: string
   query: string
-  categoryId?: string | null
-  locationId?: string | null
-  radius?: number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   lastRunAt?: Date | string | null
   checkInterval?: number
@@ -894,24 +659,22 @@ export type SearchConfigUpdateToOneWithWhereWithoutOffersInput = {
 
 export type SearchConfigUpdateWithoutOffersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneWithoutSearchesNestedInput
-  location?: Prisma.LocationUpdateOneWithoutSearchesNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutSearchConfigsNestedInput
 }
 
 export type SearchConfigUncheckedUpdateWithoutOffersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
@@ -922,10 +685,9 @@ export type SearchConfigUncheckedUpdateWithoutOffersInput = {
 
 export type SearchConfigCreateManyUserInput = {
   id?: string
+  source?: string
   query: string
-  categoryId?: string | null
-  locationId?: string | null
-  radius?: number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   lastRunAt?: Date | string | null
   checkInterval?: number
@@ -935,24 +697,22 @@ export type SearchConfigCreateManyUserInput = {
 
 export type SearchConfigUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneWithoutSearchesNestedInput
-  location?: Prisma.LocationUpdateOneWithoutSearchesNestedInput
   offers?: Prisma.ScrapedOfferUpdateManyWithoutSearchConfigNestedInput
 }
 
 export type SearchConfigUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
@@ -963,121 +723,12 @@ export type SearchConfigUncheckedUpdateWithoutUserInput = {
 
 export type SearchConfigUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
+  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type SearchConfigCreateManyCategoryInput = {
-  id?: string
-  query: string
-  locationId?: string | null
-  radius?: number
-  isActive?: boolean
-  lastRunAt?: Date | string | null
-  checkInterval?: number
-  userId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type SearchConfigUpdateWithoutCategoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  query?: Prisma.StringFieldUpdateOperationsInput | string
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutSearchesNestedInput
-  offers?: Prisma.ScrapedOfferUpdateManyWithoutSearchConfigNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutSearchConfigsNestedInput
-}
-
-export type SearchConfigUncheckedUpdateWithoutCategoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  query?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  offers?: Prisma.ScrapedOfferUncheckedUpdateManyWithoutSearchConfigNestedInput
-}
-
-export type SearchConfigUncheckedUpdateManyWithoutCategoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  query?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type SearchConfigCreateManyLocationInput = {
-  id?: string
-  query: string
-  categoryId?: string | null
-  radius?: number
-  isActive?: boolean
-  lastRunAt?: Date | string | null
-  checkInterval?: number
-  userId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type SearchConfigUpdateWithoutLocationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  query?: Prisma.StringFieldUpdateOperationsInput | string
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneWithoutSearchesNestedInput
-  offers?: Prisma.ScrapedOfferUpdateManyWithoutSearchConfigNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutSearchConfigsNestedInput
-}
-
-export type SearchConfigUncheckedUpdateWithoutLocationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  query?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  offers?: Prisma.ScrapedOfferUncheckedUpdateManyWithoutSearchConfigNestedInput
-}
-
-export type SearchConfigUncheckedUpdateManyWithoutLocationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  query?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  radius?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastRunAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  checkInterval?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1115,18 +766,15 @@ export type SearchConfigCountOutputTypeCountOffersArgs<ExtArgs extends runtime.T
 
 export type SearchConfigSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  source?: boolean
   query?: boolean
-  categoryId?: boolean
-  locationId?: boolean
-  radius?: boolean
+  parameters?: boolean
   isActive?: boolean
   lastRunAt?: boolean
   checkInterval?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.SearchConfig$categoryArgs<ExtArgs>
-  location?: boolean | Prisma.SearchConfig$locationArgs<ExtArgs>
   offers?: boolean | Prisma.SearchConfig$offersArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SearchConfigCountOutputTypeDefaultArgs<ExtArgs>
@@ -1134,44 +782,37 @@ export type SearchConfigSelect<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type SearchConfigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  source?: boolean
   query?: boolean
-  categoryId?: boolean
-  locationId?: boolean
-  radius?: boolean
+  parameters?: boolean
   isActive?: boolean
   lastRunAt?: boolean
   checkInterval?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.SearchConfig$categoryArgs<ExtArgs>
-  location?: boolean | Prisma.SearchConfig$locationArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["searchConfig"]>
 
 export type SearchConfigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  source?: boolean
   query?: boolean
-  categoryId?: boolean
-  locationId?: boolean
-  radius?: boolean
+  parameters?: boolean
   isActive?: boolean
   lastRunAt?: boolean
   checkInterval?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.SearchConfig$categoryArgs<ExtArgs>
-  location?: boolean | Prisma.SearchConfig$locationArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["searchConfig"]>
 
 export type SearchConfigSelectScalar = {
   id?: boolean
+  source?: boolean
   query?: boolean
-  categoryId?: boolean
-  locationId?: boolean
-  radius?: boolean
+  parameters?: boolean
   isActive?: boolean
   lastRunAt?: boolean
   checkInterval?: boolean
@@ -1180,39 +821,30 @@ export type SearchConfigSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SearchConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "query" | "categoryId" | "locationId" | "radius" | "isActive" | "lastRunAt" | "checkInterval" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["searchConfig"]>
+export type SearchConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "query" | "parameters" | "isActive" | "lastRunAt" | "checkInterval" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["searchConfig"]>
 export type SearchConfigInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.SearchConfig$categoryArgs<ExtArgs>
-  location?: boolean | Prisma.SearchConfig$locationArgs<ExtArgs>
   offers?: boolean | Prisma.SearchConfig$offersArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SearchConfigCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SearchConfigIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.SearchConfig$categoryArgs<ExtArgs>
-  location?: boolean | Prisma.SearchConfig$locationArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type SearchConfigIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.SearchConfig$categoryArgs<ExtArgs>
-  location?: boolean | Prisma.SearchConfig$locationArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $SearchConfigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SearchConfig"
   objects: {
-    category: Prisma.$CategoryPayload<ExtArgs> | null
-    location: Prisma.$LocationPayload<ExtArgs> | null
     offers: Prisma.$ScrapedOfferPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    source: string
     query: string
-    categoryId: string | null
-    locationId: string | null
-    radius: number
+    parameters: runtime.JsonValue
     isActive: boolean
     lastRunAt: Date | null
     checkInterval: number
@@ -1613,8 +1245,6 @@ readonly fields: SearchConfigFieldRefs;
  */
 export interface Prisma__SearchConfigClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  category<T extends Prisma.SearchConfig$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SearchConfig$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  location<T extends Prisma.SearchConfig$locationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SearchConfig$locationArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   offers<T extends Prisma.SearchConfig$offersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SearchConfig$offersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScrapedOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1647,10 +1277,9 @@ export interface Prisma__SearchConfigClient<T, Null = never, ExtArgs extends run
  */
 export interface SearchConfigFieldRefs {
   readonly id: Prisma.FieldRef<"SearchConfig", 'String'>
+  readonly source: Prisma.FieldRef<"SearchConfig", 'String'>
   readonly query: Prisma.FieldRef<"SearchConfig", 'String'>
-  readonly categoryId: Prisma.FieldRef<"SearchConfig", 'String'>
-  readonly locationId: Prisma.FieldRef<"SearchConfig", 'String'>
-  readonly radius: Prisma.FieldRef<"SearchConfig", 'Int'>
+  readonly parameters: Prisma.FieldRef<"SearchConfig", 'Json'>
   readonly isActive: Prisma.FieldRef<"SearchConfig", 'Boolean'>
   readonly lastRunAt: Prisma.FieldRef<"SearchConfig", 'DateTime'>
   readonly checkInterval: Prisma.FieldRef<"SearchConfig", 'Int'>
@@ -2050,44 +1679,6 @@ export type SearchConfigDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many SearchConfigs to delete.
    */
   limit?: number
-}
-
-/**
- * SearchConfig.category
- */
-export type SearchConfig$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Category
-   */
-  select?: Prisma.CategorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Category
-   */
-  omit?: Prisma.CategoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CategoryInclude<ExtArgs> | null
-  where?: Prisma.CategoryWhereInput
-}
-
-/**
- * SearchConfig.location
- */
-export type SearchConfig$locationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Location
-   */
-  select?: Prisma.LocationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Location
-   */
-  omit?: Prisma.LocationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LocationInclude<ExtArgs> | null
-  where?: Prisma.LocationWhereInput
 }
 
 /**

@@ -28,7 +28,6 @@ export class SchedulerService implements OnModuleInit {
     
     const activeSearches = await this.prisma.searchConfig.findMany({
       where: { isActive: true },
-      include: { category: true, location: true },
     });
 
     let scheduledCount = 0;
@@ -52,7 +51,6 @@ export class SchedulerService implements OnModuleInit {
   async triggerSearchImmediately(searchConfigId: string) {
     const config = await this.prisma.searchConfig.findUnique({
       where: { id: searchConfigId },
-      include: { category: true, location: true },
     });
 
     if (config && config.isActive) {
@@ -68,21 +66,9 @@ export class SchedulerService implements OnModuleInit {
       type: 'scrape',
       configId: config.id,
       query: config.query,
-      categoryId: config.categoryId,
-      radius: config.radius,
+      source: config.source || 'olx',
+      parameters: config.parameters || {},
     };
-    
-    if (config.location) {
-       payload.locationId = config.locationId;
-       if (config.location.type === 'region') {
-         payload.regionId = config.location.id; 
-       } else {
-         payload.cityId = config.location.id;
-       }
-    } else if (config.locationId) {
-      payload.locationId = config.locationId;
-      payload.cityId = config.locationId; 
-    }
 
     try {
       await this.redis.lpush('task_queue', JSON.stringify(payload));

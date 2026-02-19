@@ -2,10 +2,11 @@ import requests
 import json
 import logging
 from typing import List, Dict, Any, Optional
+from src.scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
-class OlxScraper:
+class OlxScraper(BaseScraper):
     BASE_URL = "https://www.olx.pl/apigateway/graphql"
     HEADERS = {
         "Content-Type": "application/json",
@@ -76,11 +77,20 @@ class OlxScraper:
     }
     """
 
-    def search(self, query: str, category_id: Optional[str] = None, 
-               region_id: Optional[str] = None, city_id: Optional[str] = None, 
-               dist: int = 0,
-               offset: int = 0, limit: int = 40) -> Dict[str, Any]:
+    @property
+    def name(self) -> str:
+        return "olx"
+
+    def search(self, query: str, **kwargs) -> Dict[str, Any]:
         
+        category_id = kwargs.get('categoryId') or kwargs.get('category_id')
+        city_id = kwargs.get('cityId') or kwargs.get('city_id')
+        region_id = kwargs.get('regionId') or kwargs.get('region_id')
+        
+        radius = kwargs.get('radius') or 0
+        offset = kwargs.get('offset', 0)
+        limit = kwargs.get('limit', 40)
+
         search_params = [
             {"key": "offset", "value": str(offset)},
             {"key": "limit", "value": str(limit)},
@@ -88,8 +98,8 @@ class OlxScraper:
             {"key": "suggest_filters", "value": "true"} # Always suggest filters
         ]
 
-        if dist > 0:
-             search_params.append({"key": "distance", "value": str(dist)})
+        if radius and int(radius) > 0:
+             search_params.append({"key": "distance", "value": str(radius)})
         
         if category_id:
             search_params.append({"key": "category_id", "value": str(category_id)})

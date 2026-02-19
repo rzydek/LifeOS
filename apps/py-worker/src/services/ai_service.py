@@ -60,7 +60,7 @@ class AIService:
 
             prompt = ChatPromptTemplate.from_messages([
                 ("system", "You are an expert car mechanic and parts trader specializing in Mercedes AMG and Jeep. Evaluate if the following item is relevant to the search query and if it's a good deal. Be critical."),
-                ("user", "Search Query: {query}\nItem Title: {title}\nPrice: {price} {currency}\n\nReturn JSON with 'score' (0-100) and 'reasoning'."),
+                ("user", "Search Query: {query}\nItem Title: {title}\nItem Description: {description}\nPrice: {price} {currency}\n\nReturn JSON with 'score' (0-100) and 'reasoning'."),
             ])
 
             self.chain = prompt | llm | parser
@@ -68,12 +68,12 @@ class AIService:
             logger.warning(f"Failed to initialize AI: {e}")
             self.chain = None
 
-    def evaluate_offer(self, query, title, price, currency):
+    def evaluate_offer(self, query, title, description, price, currency):
         if not self.chain:
             return None, None
         try:
             start_time = time.time()
-            result = self.chain.invoke({"query": query, "title": title, "price": price, "currency": currency})
+            result = self.chain.invoke({"query": query, "title": title, "description": description, "price": price, "currency": currency})
             logger.info(f"AI Evaluation took {time.time() - start_time:.2f}s: {result}")
             return result.get("score"), result.get("reasoning")
         except Exception as e:

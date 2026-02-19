@@ -1,24 +1,18 @@
-import { IsString, IsNotEmpty, IsOptional, IsNumber, IsBoolean } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsNumber, IsBoolean, IsObject } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class CreateSearchConfigDto {
   @IsString()
   @IsNotEmpty()
   query: string;
-
+  
   @IsString()
   @IsOptional()
-  @Transform(({ value }) => value === "" ? null : value)
-  categoryId?: string;
+  source?: string;
 
-  @IsString()
+  @IsObject()
   @IsOptional()
-  @Transform(({ value }) => value === "" ? null : value)
-  locationId?: string;
-
-  @IsNumber()
-  @IsOptional()
-  radius?: number;
+  parameters?: any; // Generic JSON payload
 
   @IsNumber()
   @IsOptional()
@@ -80,17 +74,11 @@ export class UpdateSearchConfigDto {
 
   @IsString()
   @IsOptional()
-  @Transform(({ value }) => value === "" ? null : value)
-  categoryId?: string;
+  source?: string;
 
-  @IsString()
+  @IsObject()
   @IsOptional()
-  @Transform(({ value }) => value === "" ? null : value)
-  locationId?: string;
-
-  @IsNumber()
-  @IsOptional()
-  radius?: number;
+  parameters?: any;
 
   @IsNumber()
   @IsOptional()

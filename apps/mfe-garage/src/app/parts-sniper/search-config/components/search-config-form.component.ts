@@ -12,6 +12,8 @@ import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { HlmIconImports } from '@spartan-ng/helm/icon';
 import { HlmSelectImports } from '@spartan-ng/helm/select';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
+import { provideIcons } from '@ng-icons/core';
+import { lucidePlus } from '@ng-icons/lucide';
 
 @Component({
     selector: 'lifeos-search-config-form',
@@ -26,6 +28,7 @@ import { BrnSelectImports } from '@spartan-ng/brain/select';
         HlmSelectImports,
         BrnSelectImports,
     ],
+    providers: [provideIcons({ lucidePlus })],
     templateUrl: './search-config-form.component.html',
 })
 export class SearchConfigFormComponent {
@@ -36,8 +39,17 @@ export class SearchConfigFormComponent {
     openCategoryDialog = output<void>();
     openLocationDialog = output<void>();
 
-    newConfig = signal<Partial<SearchConfig>>({
+    // Internal model for form state
+    newConfig = signal<{
+        query: string;
+        source: string;
+        categoryId: string;
+        locationId: string;
+        radius: number;
+        checkInterval: number;
+    }>({
         query: '',
+        source: 'olx',
         categoryId: '',
         locationId: '',
         radius: 0,
@@ -67,18 +79,33 @@ export class SearchConfigFormComponent {
         const config = this.newConfig();
         if (!config.query) return;
 
+        let locationId = '';
         if (this.selectedCityId()) {
-            config.locationId = this.selectedCityId();
+            locationId = this.selectedCityId();
         } else if (this.selectedRegionId()) {
-            config.locationId = this.selectedRegionId();
-        } else {
-            config.locationId = '';
+            locationId = this.selectedRegionId();
         }
 
-        this.configAdded.emit(config);
+        // Pack OLX specific fields into parameters object
+        const parameters: any = {};
+        if (config.source === 'olx') {
+            parameters.categoryId = config.categoryId;
+            parameters.locationId = locationId;
+            parameters.radius = config.radius;
+        }
+
+        const finalConfig: any = {
+            query: config.query,
+            source: config.source,
+            checkInterval: config.checkInterval,
+            parameters: parameters,
+        };
+
+        this.configAdded.emit(finalConfig);
 
         this.newConfig.set({
             query: '',
+            source: 'olx',
             categoryId: '',
             locationId: '',
             radius: 0,
@@ -89,11 +116,15 @@ export class SearchConfigFormComponent {
     }
 
     setQuery(query: string) {
-        this.newConfig.update((c) => ({ ...c, query }));
+        this.newConfig.update((c) => ({ ...c, query: query }));
+    }
+
+    setSource(source: string) {
+        this.newConfig.update((c) => ({ ...c, source: source }));
     }
 
     setCategoryId(categoryId: string) {
-        this.newConfig.update((c) => ({ ...c, categoryId }));
+        this.newConfig.update((c) => ({ ...c, categoryId: categoryId }));
     }
 
     clearCategory(event: Event) {
@@ -111,6 +142,6 @@ export class SearchConfigFormComponent {
     }
 
     setRadius(radius: number) {
-        this.newConfig.update((c) => ({ ...c, radius }));
+        this.newConfig.update((c) => ({ ...c, radius: radius }));
     }
 }

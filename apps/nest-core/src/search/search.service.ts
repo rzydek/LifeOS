@@ -28,10 +28,7 @@ export class SearchService {
   async getSearchConfigs(userId: number) {
     return this.prisma.searchConfig.findMany({
       where: { userId },
-      include: {
-        category: true,
-        location: true,
-      },
+      orderBy: { createdAt: 'desc' },
     });
   }
 

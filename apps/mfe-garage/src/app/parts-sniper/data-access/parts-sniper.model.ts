@@ -1,12 +1,11 @@
 export interface SearchConfig {
   id: string;
   query: string;
-  categoryId: string;
-  locationId?: string;
-  radius: number;
+  source: string;
+  parameters: Record<string, any>;
   isActive: boolean;
   lastRunAt?: Date;
-  checkInterval: number; // seconds
+  checkInterval: number;
   userId: number;
 }
 

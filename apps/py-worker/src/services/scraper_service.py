@@ -4,12 +4,9 @@ from sqlalchemy.orm import Session
 from src.database.models import ScrapedOffer, OfferPriceHistory
 from src.services.ai_service import ai_service
 from src.utils.logger import logger
-from src.scrapers.olx_scraper import OlxScraper
+from src.scrapers.factory import ScraperFactory
 
 class ScraperService:
-    def __init__(self):
-        self.scraper = OlxScraper()
-
     def process_task(self, db: Session, task_data: dict):
         config_id = task_data.get("configId")
         query = task_data.get("query")
@@ -18,28 +15,31 @@ class ScraperService:
             logger.error("Task missing 'query' parameter.")
             return
 
-        category_id = task_data.get('categoryId') or task_data.get('category_id')
-        
-        city_id = task_data.get('cityId') or task_data.get('city_id')
-        region_id = task_data.get('regionId') or task_data.get('region_id')
-        
-        radius = task_data.get('radius') or task_data.get('dist') or 0
-
-        location_id = task_data.get('locationId') or task_data.get('location_id')
-        if not city_id and not region_id and location_id:
-            city_id = location_id
-        
-        logger.info(f"Processing scrape task: {query} (Config: {config_id}, Radius: {radius})")
+        # Determine which scraper to use. Default to 'olx' for now if not specified.
+        # Future: task_data could contain "source": "olx" or "ebay"
+        source = task_data.get("source", "olx")
         
         try:
-            results = self.scraper.search(query=query, category_id=category_id, city_id=city_id, region_id=region_id, dist=radius)
+            scraper = ScraperFactory.get_scraper(source)
+        except ValueError as e:
+            logger.error(f"Scraper error: {e}")
+            return
+
+        # Flatten parameters into kwargs
+        parameters = task_data.get('parameters', {})
+        
+        logger.info(f"Processing scrape task: {query} (Config: {config_id}, Params: {parameters}, Source: {source})")
+        
+        try:
+            # Pass all parameters as kwargs
+            results = scraper.search(query=query, **parameters)
             
             if isinstance(results, dict) and "error" in results:
                  logger.error(f"Scraper returned error: {results['error']}")
                  return
 
-            listings = self.scraper.parse_results(results)
-            logger.info(f"Found {len(listings)} listings.")
+            listings = scraper.parse_results(results)
+            logger.info(f"Found {len(listings)} listings from {source}.")
             
             if listings:
                 self.save_results(db, config_id, listings, query_text=query)
@@ -54,6 +54,7 @@ class ScraperService:
             for item in unique_listings:
                 external_id = str(item['id'])
                 item_title = item.get('title')
+                item_description = item.get('description', '')
                 item_url = item.get('url')
                 raw_price = item.get('price')
                 currency = item.get('currency')
@@ -82,7 +83,7 @@ class ScraperService:
 
                     if (existing_offer.aiScore is None or price_changed) and query_text:
                         logger.info(f"Re-evaluating AI score for {item_title} due to missing score or price change.")
-                        score, reasoning = ai_service.evaluate_offer(query_text, item_title, raw_price, currency)
+                        score, reasoning = ai_service.evaluate_offer(query_text, item_title, item_description, raw_price, currency)
                         if score is not None:
                             existing_offer.aiScore = score
                             existing_offer.aiReasoning = reasoning
@@ -100,7 +101,7 @@ class ScraperService:
                 else:
                     score, reasoning = None, None
                     if query_text:
-                        score, reasoning = ai_service.evaluate_offer(query_text, item_title, raw_price, currency)
+                        score, reasoning = ai_service.evaluate_offer(query_text, item_title, item_description, raw_price, currency)
 
                     new_offer_id = str(uuid4())
                     new_offer = ScrapedOffer(

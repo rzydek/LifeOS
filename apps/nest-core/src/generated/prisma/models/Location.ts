@@ -26,6 +26,7 @@ export type AggregateLocation = {
 
 export type LocationMinAggregateOutputType = {
   id: string | null
+  source: string | null
   name: string | null
   type: string | null
   parentId: string | null
@@ -33,6 +34,7 @@ export type LocationMinAggregateOutputType = {
 
 export type LocationMaxAggregateOutputType = {
   id: string | null
+  source: string | null
   name: string | null
   type: string | null
   parentId: string | null
@@ -40,6 +42,7 @@ export type LocationMaxAggregateOutputType = {
 
 export type LocationCountAggregateOutputType = {
   id: number
+  source: number
   name: number
   type: number
   parentId: number
@@ -49,6 +52,7 @@ export type LocationCountAggregateOutputType = {
 
 export type LocationMinAggregateInputType = {
   id?: true
+  source?: true
   name?: true
   type?: true
   parentId?: true
@@ -56,6 +60,7 @@ export type LocationMinAggregateInputType = {
 
 export type LocationMaxAggregateInputType = {
   id?: true
+  source?: true
   name?: true
   type?: true
   parentId?: true
@@ -63,6 +68,7 @@ export type LocationMaxAggregateInputType = {
 
 export type LocationCountAggregateInputType = {
   id?: true
+  source?: true
   name?: true
   type?: true
   parentId?: true
@@ -143,6 +149,7 @@ export type LocationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type LocationGroupByOutputType = {
   id: string
+  source: string
   name: string
   type: string
   parentId: string | null
@@ -171,39 +178,41 @@ export type LocationWhereInput = {
   OR?: Prisma.LocationWhereInput[]
   NOT?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
   id?: Prisma.StringFilter<"Location"> | string
+  source?: Prisma.StringFilter<"Location"> | string
   name?: Prisma.StringFilter<"Location"> | string
   type?: Prisma.StringFilter<"Location"> | string
   parentId?: Prisma.StringNullableFilter<"Location"> | string | null
   parent?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   children?: Prisma.LocationListRelationFilter
-  searches?: Prisma.SearchConfigListRelationFilter
 }
 
 export type LocationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   parent?: Prisma.LocationOrderByWithRelationInput
   children?: Prisma.LocationOrderByRelationAggregateInput
-  searches?: Prisma.SearchConfigOrderByRelationAggregateInput
 }
 
 export type LocationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  id_source?: Prisma.LocationIdSourceCompoundUniqueInput
   AND?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
   OR?: Prisma.LocationWhereInput[]
   NOT?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
+  source?: Prisma.StringFilter<"Location"> | string
   name?: Prisma.StringFilter<"Location"> | string
   type?: Prisma.StringFilter<"Location"> | string
   parentId?: Prisma.StringNullableFilter<"Location"> | string | null
   parent?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   children?: Prisma.LocationListRelationFilter
-  searches?: Prisma.SearchConfigListRelationFilter
-}, "id">
+}, "id" | "id_source">
 
 export type LocationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -217,6 +226,7 @@ export type LocationScalarWhereWithAggregatesInput = {
   OR?: Prisma.LocationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LocationScalarWhereWithAggregatesInput | Prisma.LocationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Location"> | string
+  source?: Prisma.StringWithAggregatesFilter<"Location"> | string
   name?: Prisma.StringWithAggregatesFilter<"Location"> | string
   type?: Prisma.StringWithAggregatesFilter<"Location"> | string
   parentId?: Prisma.StringNullableWithAggregatesFilter<"Location"> | string | null
@@ -224,42 +234,43 @@ export type LocationScalarWhereWithAggregatesInput = {
 
 export type LocationCreateInput = {
   id: string
+  source?: string
   name: string
   type: string
   parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
   children?: Prisma.LocationCreateNestedManyWithoutParentInput
-  searches?: Prisma.SearchConfigCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateInput = {
   id: string
+  source?: string
   name: string
   type: string
   parentId?: string | null
   children?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
-  searches?: Prisma.SearchConfigUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
   children?: Prisma.LocationUpdateManyWithoutParentNestedInput
-  searches?: Prisma.SearchConfigUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   children?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
-  searches?: Prisma.SearchConfigUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationCreateManyInput = {
   id: string
+  source?: string
   name: string
   type: string
   parentId?: string | null
@@ -267,12 +278,14 @@ export type LocationCreateManyInput = {
 
 export type LocationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LocationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -293,8 +306,14 @@ export type LocationOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type LocationIdSourceCompoundUniqueInput = {
+  id: string
+  source: string
+}
+
 export type LocationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
@@ -302,6 +321,7 @@ export type LocationCountOrderByAggregateInput = {
 
 export type LocationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
@@ -309,6 +329,7 @@ export type LocationMaxOrderByAggregateInput = {
 
 export type LocationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  source?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
@@ -372,36 +393,20 @@ export type LocationUncheckedUpdateManyWithoutParentNestedInput = {
   deleteMany?: Prisma.LocationScalarWhereInput | Prisma.LocationScalarWhereInput[]
 }
 
-export type LocationCreateNestedOneWithoutSearchesInput = {
-  create?: Prisma.XOR<Prisma.LocationCreateWithoutSearchesInput, Prisma.LocationUncheckedCreateWithoutSearchesInput>
-  connectOrCreate?: Prisma.LocationCreateOrConnectWithoutSearchesInput
-  connect?: Prisma.LocationWhereUniqueInput
-}
-
-export type LocationUpdateOneWithoutSearchesNestedInput = {
-  create?: Prisma.XOR<Prisma.LocationCreateWithoutSearchesInput, Prisma.LocationUncheckedCreateWithoutSearchesInput>
-  connectOrCreate?: Prisma.LocationCreateOrConnectWithoutSearchesInput
-  upsert?: Prisma.LocationUpsertWithoutSearchesInput
-  disconnect?: Prisma.LocationWhereInput | boolean
-  delete?: Prisma.LocationWhereInput | boolean
-  connect?: Prisma.LocationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LocationUpdateToOneWithWhereWithoutSearchesInput, Prisma.LocationUpdateWithoutSearchesInput>, Prisma.LocationUncheckedUpdateWithoutSearchesInput>
-}
-
 export type LocationCreateWithoutChildrenInput = {
   id: string
+  source?: string
   name: string
   type: string
   parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
-  searches?: Prisma.SearchConfigCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateWithoutChildrenInput = {
   id: string
+  source?: string
   name: string
   type: string
   parentId?: string | null
-  searches?: Prisma.SearchConfigUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationCreateOrConnectWithoutChildrenInput = {
@@ -411,18 +416,18 @@ export type LocationCreateOrConnectWithoutChildrenInput = {
 
 export type LocationCreateWithoutParentInput = {
   id: string
+  source?: string
   name: string
   type: string
   children?: Prisma.LocationCreateNestedManyWithoutParentInput
-  searches?: Prisma.SearchConfigCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateWithoutParentInput = {
   id: string
+  source?: string
   name: string
   type: string
   children?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
-  searches?: Prisma.SearchConfigUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationCreateOrConnectWithoutParentInput = {
@@ -448,18 +453,18 @@ export type LocationUpdateToOneWithWhereWithoutChildrenInput = {
 
 export type LocationUpdateWithoutChildrenInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
-  searches?: Prisma.SearchConfigUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateWithoutChildrenInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  searches?: Prisma.SearchConfigUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUpsertWithWhereUniqueWithoutParentInput = {
@@ -483,83 +488,38 @@ export type LocationScalarWhereInput = {
   OR?: Prisma.LocationScalarWhereInput[]
   NOT?: Prisma.LocationScalarWhereInput | Prisma.LocationScalarWhereInput[]
   id?: Prisma.StringFilter<"Location"> | string
+  source?: Prisma.StringFilter<"Location"> | string
   name?: Prisma.StringFilter<"Location"> | string
   type?: Prisma.StringFilter<"Location"> | string
   parentId?: Prisma.StringNullableFilter<"Location"> | string | null
 }
 
-export type LocationCreateWithoutSearchesInput = {
-  id: string
-  name: string
-  type: string
-  parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
-  children?: Prisma.LocationCreateNestedManyWithoutParentInput
-}
-
-export type LocationUncheckedCreateWithoutSearchesInput = {
-  id: string
-  name: string
-  type: string
-  parentId?: string | null
-  children?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
-}
-
-export type LocationCreateOrConnectWithoutSearchesInput = {
-  where: Prisma.LocationWhereUniqueInput
-  create: Prisma.XOR<Prisma.LocationCreateWithoutSearchesInput, Prisma.LocationUncheckedCreateWithoutSearchesInput>
-}
-
-export type LocationUpsertWithoutSearchesInput = {
-  update: Prisma.XOR<Prisma.LocationUpdateWithoutSearchesInput, Prisma.LocationUncheckedUpdateWithoutSearchesInput>
-  create: Prisma.XOR<Prisma.LocationCreateWithoutSearchesInput, Prisma.LocationUncheckedCreateWithoutSearchesInput>
-  where?: Prisma.LocationWhereInput
-}
-
-export type LocationUpdateToOneWithWhereWithoutSearchesInput = {
-  where?: Prisma.LocationWhereInput
-  data: Prisma.XOR<Prisma.LocationUpdateWithoutSearchesInput, Prisma.LocationUncheckedUpdateWithoutSearchesInput>
-}
-
-export type LocationUpdateWithoutSearchesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
-  children?: Prisma.LocationUpdateManyWithoutParentNestedInput
-}
-
-export type LocationUncheckedUpdateWithoutSearchesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  children?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
-}
-
 export type LocationCreateManyParentInput = {
   id: string
+  source?: string
   name: string
   type: string
 }
 
 export type LocationUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   children?: Prisma.LocationUpdateManyWithoutParentNestedInput
-  searches?: Prisma.SearchConfigUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   children?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
-  searches?: Prisma.SearchConfigUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateManyWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -571,12 +531,10 @@ export type LocationUncheckedUpdateManyWithoutParentInput = {
 
 export type LocationCountOutputType = {
   children: number
-  searches: number
 }
 
 export type LocationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | LocationCountOutputTypeCountChildrenArgs
-  searches?: boolean | LocationCountOutputTypeCountSearchesArgs
 }
 
 /**
@@ -596,27 +554,21 @@ export type LocationCountOutputTypeCountChildrenArgs<ExtArgs extends runtime.Typ
   where?: Prisma.LocationWhereInput
 }
 
-/**
- * LocationCountOutputType without action
- */
-export type LocationCountOutputTypeCountSearchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SearchConfigWhereInput
-}
-
 
 export type LocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  source?: boolean
   name?: boolean
   type?: boolean
   parentId?: boolean
   parent?: boolean | Prisma.Location$parentArgs<ExtArgs>
   children?: boolean | Prisma.Location$childrenArgs<ExtArgs>
-  searches?: boolean | Prisma.Location$searchesArgs<ExtArgs>
   _count?: boolean | Prisma.LocationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["location"]>
 
 export type LocationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  source?: boolean
   name?: boolean
   type?: boolean
   parentId?: boolean
@@ -625,6 +577,7 @@ export type LocationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 
 export type LocationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  source?: boolean
   name?: boolean
   type?: boolean
   parentId?: boolean
@@ -633,16 +586,16 @@ export type LocationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 
 export type LocationSelectScalar = {
   id?: boolean
+  source?: boolean
   name?: boolean
   type?: boolean
   parentId?: boolean
 }
 
-export type LocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "parentId", ExtArgs["result"]["location"]>
+export type LocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "name" | "type" | "parentId", ExtArgs["result"]["location"]>
 export type LocationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parent?: boolean | Prisma.Location$parentArgs<ExtArgs>
   children?: boolean | Prisma.Location$childrenArgs<ExtArgs>
-  searches?: boolean | Prisma.Location$searchesArgs<ExtArgs>
   _count?: boolean | Prisma.LocationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LocationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -657,10 +610,10 @@ export type $LocationPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     parent: Prisma.$LocationPayload<ExtArgs> | null
     children: Prisma.$LocationPayload<ExtArgs>[]
-    searches: Prisma.$SearchConfigPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    source: string
     name: string
     type: string
     parentId: string | null
@@ -1060,7 +1013,6 @@ export interface Prisma__LocationClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   parent<T extends Prisma.Location$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Location$parentArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   children<T extends Prisma.Location$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Location$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  searches<T extends Prisma.Location$searchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Location$searchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SearchConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1091,6 +1043,7 @@ export interface Prisma__LocationClient<T, Null = never, ExtArgs extends runtime
  */
 export interface LocationFieldRefs {
   readonly id: Prisma.FieldRef<"Location", 'String'>
+  readonly source: Prisma.FieldRef<"Location", 'String'>
   readonly name: Prisma.FieldRef<"Location", 'String'>
   readonly type: Prisma.FieldRef<"Location", 'String'>
   readonly parentId: Prisma.FieldRef<"Location", 'String'>
@@ -1530,30 +1483,6 @@ export type Location$childrenArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.LocationScalarFieldEnum | Prisma.LocationScalarFieldEnum[]
-}
-
-/**
- * Location.searches
- */
-export type Location$searchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SearchConfig
-   */
-  select?: Prisma.SearchConfigSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the SearchConfig
-   */
-  omit?: Prisma.SearchConfigOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SearchConfigInclude<ExtArgs> | null
-  where?: Prisma.SearchConfigWhereInput
-  orderBy?: Prisma.SearchConfigOrderByWithRelationInput | Prisma.SearchConfigOrderByWithRelationInput[]
-  cursor?: Prisma.SearchConfigWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SearchConfigScalarFieldEnum | Prisma.SearchConfigScalarFieldEnum[]
 }
 
 /**

@@ -18,37 +18,41 @@ model User {
 }
 
 model Category {
-  id        String   @id // OLX ID manually input by user
+  id        String   @id
+  source    String   @default("olx")
   name      String
   parentId  String?
   parent    Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
   children  Category[] @relation("CategoryHierarchy")
-  searches  SearchConfig[]
+  
+  @@unique([id, source])
 }
 
 model Location {
-  id        String   @id // OLX ID manually input
+  id        String   @id
+  source    String   @default("olx")
   name      String
   type      String   // 'city' or 'region'
   parentId  String?
   parent    Location? @relation("LocationHierarchy", fields: [parentId], references: [id])
   children  Location[] @relation("LocationHierarchy")
-  searches  SearchConfig[]
+  
+  @@unique([id, source])
 }
 
 model SearchConfig {
   id            String   @id @default(uuid())
+  source        String   @default("olx") // "olx", "ebay", "allegro"
   query         String
-  categoryId    String?
   
-  category      Category? @relation(fields: [categoryId], references: [id])
-  locationId    String?
-  location      Location? @relation(fields: [locationId], references: [id])
-  radius        Int      @default(0) // Distance in km: 0, 2, 5, 10, 15, 30, 50, 75, 100
+  // Generic JSON storage for provider-specific filters
+  // For OLX: { categoryId: "...", locationId: "...", radius: 0 }
+  // For eBay: { categoryId: "...", listingType: "Auction", itemLocation: "..." }
+  parameters    Json     @default("{}")
   
-  isActive      Boolean  @default(true) // Should be active by default
+  isActive      Boolean  @default(true)
   lastRunAt     DateTime?
-  checkInterval Int      @default(3600) // seconds (e.g., 1 hour)
+  checkInterval Int      @default(3600) // seconds
   
   offers        ScrapedOffer[]
   
