@@ -1,84 +1,200 @@
-<div class="p-6 rounded-xl border h-full flex flex-col bg-card text-card-foreground">
-  <div class="flex justify-between items-center mb-6">
-    <div>
-      <h2 class="text-2xl font-bold tracking-tight">Sniper Results</h2>
-      <p class="text-sm text-muted-foreground mt-1">Live feed of scraped offers and AI ratings</p>
-    </div>
-    <div class="flex items-center gap-3 p-1.5 rounded-lg border">
-        <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-md hover:bg-background transition-colors select-none" hlmLabel>
-            <hlm-checkbox [(ngModel)]="onlyGreatDeals" (changed)="refresh()"></hlm-checkbox>
-            <span class="text-sm font-medium">Great Deals Only (AI > 80)</span>
-        </label>
-        <div class="w-px h-6 bg-border"></div>
-        <button hlmBtn variant="ghost" size="icon" (click)="refresh()" title="Refresh Results">
-             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
-        </button>
-    </div>
-  </div>
+<hlm-sheet side="right" #sheetRef>
+    <div class="h-full flex flex-col px-6 overflow-hidden">
+        <div class="flex justify-between items-center mb-4 shrink-0">
+            <div class="flex items-center gap-2">
+                <h2 class="text-xl font-bold tracking-tight">Sniper Results</h2>
+                <button
+                    hlmBtn
+                    variant="ghost"
+                    size="icon"
+                    (click)="refresh()"
+                    title="Refresh Results"
+                    class="h-8 w-8"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"
+                        />
+                        <path d="M21 3v5h-5" />
+                        <path
+                            d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"
+                        />
+                        <path d="M3 21v-5h5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
 
-  <div class="flex-1 overflow-auto rounded-lg border shadow-sm" hlmTableContainer>
-    <table hlmTable class="w-full">
-      <thead hlmTHead>
-        <tr hlmTr>
-          <th hlmTh>Image</th>
-          <th hlmTh class="w-[40%]">Title & Reasoning</th>
-          <th hlmTh>Price</th>
-          <th hlmTh>Score</th>
-          <th hlmTh>Detected</th>
-          <th hlmTh class="text-right">Action</th>
-        </tr>
-      </thead>
-      <tbody hlmTBody>
-        @for (offer of offers; track offer.id) {
-          <tr hlmTr>
-            <td hlmTd class="w-[80px]">
-              @if (offer.thumbnailUrl) {
-                <img [src]="offer.thumbnailUrl" class="h-12 w-12 object-cover rounded-md border shadow-sm" loading="lazy">
-              } @else {
-                <div class="h-12 w-12 bg-muted rounded-md border flex items-center justify-center text-muted-foreground">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        <div
+            class="flex-1 overflow-auto rounded-lg border shadow-sm bg-card"
+            hlmTableContainer
+        >
+            <table hlmTable class="w-full">
+                <thead hlmTHead>
+                    <tr hlmTr>
+                        <th hlmTh>Title</th>
+                        <th hlmTh>Price</th>
+                        <th hlmTh>Score</th>
+                        <th hlmTh>Detected</th>
+                    </tr>
+                </thead>
+                <tbody hlmTBody>
+                    @for (offer of offers(); track offer.id) {
+                        <tr
+                            hlmTr
+                            class="hover:bg-muted/50 transition-colors cursor-pointer"
+                            (click)="openSheet(offer)"
+                        >
+                            <td hlmTd>
+                                <div class="font-medium line-clamp-2">
+                                    {{ offer.title }}
+                                </div>
+                            </td>
+                            <td hlmTd class="font-medium tabular-nums">
+                                <span>{{
+                                    offer.priceHistory[0]?.price
+                                        | currency
+                                            : offer.priceHistory[0]?.currency
+                                            : 'symbol'
+                                            : '1.0-0'
+                                }}</span>
+                            </td>
+                            <td hlmTd>
+                                <span
+                                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                    [ngClass]="getScoreClass(offer.aiScore)"
+                                >
+                                    {{ offer.aiScore }}
+                                </span>
+                            </td>
+                            <td
+                                hlmTd
+                                class="text-muted-foreground text-xs whitespace-nowrap"
+                            >
+                                {{ offer.detectedAt | date: 'shortDate' }}
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr hlmTr>
+                            <td
+                                hlmTd
+                                colspan="6"
+                                class="text-center py-10 text-muted-foreground"
+                            >
+                                No results found matching your criteria.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <hlm-sheet-content *hlmSheetPortal="let ctx">
+        <hlm-sheet-header>
+            <div hlmSheetTitle>{{ selectedOffer()?.title }}</div>
+        </hlm-sheet-header>
+
+        <div
+            class="px-4 gap-4 flex flex-col overflow-y-auto max-h-[calc(100vh-120px)]"
+        >
+            <div class="flex justify-between items-center py-2 border-b">
+                <span class="text-muted-foreground">Price</span>
+                <span class="text-xl font-bold font-mono">{{
+                    selectedOffer()?.priceHistory?.[0]?.price
+                        | currency
+                            : selectedOffer()?.priceHistory?.[0]?.currency
+                            : 'symbol'
+                            : '1.0-0'
+                }}</span>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-medium">AI Analysis</h4>
+                <div
+                    class="p-4 rounded-lg border bg-muted/40 text-sm leading-relaxed"
+                    [ngClass]="getScoreClass(selectedOffer()?.aiScore || 0)"
+                >
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold">Deal Score</span>
+                        <span class="text-lg font-bold"
+                            >{{ selectedOffer()?.aiScore }}/100</span
+                        >
+                    </div>
+                    <p>{{ selectedOffer()?.aiReasoning }}</p>
                 </div>
-              }
-            </td>
-            <td hlmTd>
-              <div class="font-medium line-clamp-1 group-hover:text-primary transition-colors" title="{{ offer.title }}">{{ offer.title }}</div>
-              @if (offer.aiReasoning) {
-                <div class="text-xs text-muted-foreground mt-1 line-clamp-2">{{ offer.aiReasoning }}</div>
-              }
-            </td>
-            <td hlmTd class="font-medium tabular-nums">
-              <span>
-                  {{ offer.priceHistory[0]?.price | currency: offer.priceHistory[0]?.currency }}
-              </span>
-            </td>
-            <td hlmTd>
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border"
-                    [ngClass]="getScoreClass(offer.aiScore)">
-                {{ offer.aiScore }}
-              </span>
-            </td>
-            <td hlmTd class="text-muted-foreground whitespace-nowrap">
-              {{ offer.detectedAt | date:'MMM d, HH:mm' }}
-            </td>
-            <td hlmTd class="text-right">
-              <a hlmBtn variant="outline" size="sm" [href]="offer.url" target="_blank">
-                View
-              </a>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-    
-    @if (offers.length === 0) {
-      <div class="flex flex-col items-center justify-center py-16 text-center">
-          <div class="bg-muted p-4 rounded-full mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          </div>
-          <h3 class="font-medium">No offers found</h3>
-          <p class="text-muted-foreground mt-1 max-w-sm">Try running a search manually via backend or wait for the scheduler. Ensure AI is running.</p>
-      </div>
-    }
-  </div>
-</div>
+            </div>
 
+            <div class="space-y-2">
+                <h4 class="font-medium">Details</h4>
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                    <div class="text-muted-foreground">Detected</div>
+                    <div class="text-right">
+                        {{ selectedOffer()?.detectedAt | date: 'medium' }}
+                    </div>
+
+                    <div class="text-muted-foreground">Last Seen</div>
+                    <div class="text-right">
+                        {{ selectedOffer()?.lastSeenAt | date: 'medium' }}
+                    </div>
+
+                    <div class="text-muted-foreground">Offer ID</div>
+                    <div
+                        class="text-right font-mono text-xs truncate"
+                        title="{{ selectedOffer()?.externalId }}"
+                    >
+                        {{ selectedOffer()?.externalId }}
+                    </div>
+                </div>
+            </div>
+
+            @if (selectedOffer()?.description) {
+                <div class="space-y-2">
+                    <h4 class="font-medium">Description</h4>
+                    <p
+                        class="text-sm text-muted-foreground whitespace-pre-wrap"
+                    >
+                        {{ selectedOffer()?.description }}
+                    </p>
+                </div>
+            }
+        </div>
+
+        <hlm-sheet-footer>
+            <a
+                hlmBtn
+                class="w-full sm:w-auto"
+                [href]="selectedOffer()?.url"
+                target="_blank"
+            >
+                Open on OLX
+                <svg
+                    class="ml-2 h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path
+                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                    />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+            </a>
+        </hlm-sheet-footer>
+    </hlm-sheet-content>
+</hlm-sheet>

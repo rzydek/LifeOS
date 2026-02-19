@@ -2,7 +2,7 @@
     "name": "mfeGarage",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
-    "prefix": "app",
+    "prefix": "lifeos",
     "sourceRoot": "apps/mfe-garage/src",
     "tags": [],
     "targets": {

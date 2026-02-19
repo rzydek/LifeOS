@@ -1,20 +1,66 @@
 
 <div class="h-full flex flex-col p-6 bg-background min-h-screen">
-  <div class="mb-8">
+  <div class="mb-6">
     <h1 class="text-3xl font-bold tracking-tight">Parts Sniper</h1>
     <p class="text-muted-foreground mt-2">Automated OLX market monitoring and deal analysis.</p>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-    <!-- Sidebar: Configurations -->
-    <div class="lg:col-span-3 sticky top-6">
-      <lifeos-search-config class="block w-full max-h-[calc(100vh-100px)]"></lifeos-search-config>
+  <hlm-tabs tab="results" class="flex-1 flex flex-col overflow-hidden">
+    <hlm-tabs-list class="w-full justify-start mb-6 border-b rounded-none p-0 bg-transparent gap-6">
+       <button hlmTabsTrigger="results" class="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-2 pb-2 transition-none">Sniper Results</button>
+       <button hlmTabsTrigger="config" class="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-2 pb-2 transition-none">Search Configuration</button>
+    </hlm-tabs-list>
+
+    <div hlmTabsContent="results" class="flex-1 flex flex-col min-h-0">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full pb-6">
+            <!-- Left Side: Config List & Filters -->
+            <div class="lg:col-span-3 flex flex-col gap-6 overflow-y-auto pr-2">
+                 
+                 <div class="rounded-xl border bg-card text-card-foreground shadow-sm overflow-hidden">
+                    <div class="p-4 border-b bg-muted/40">
+                        <h3 class="font-semibold">Search Configs</h3>
+                    </div>
+                    <div class="p-2 space-y-1">
+                        <button hlmBtn variant="ghost" class="w-full justify-start font-normal text-left" 
+                                [ngClass]="{'bg-accent text-accent-foreground font-medium': !selectedConfigId()}"
+                                (click)="selectConfig(undefined)">
+                            All Configs
+                        </button>
+                        @for (config of configs(); track config.id) {
+                            <button hlmBtn variant="ghost" class="w-full justify-start font-normal text-left truncate block" 
+                                    [ngClass]="{'bg-accent text-accent-foreground font-medium': selectedConfigId() === config.id}"
+                                    (click)="selectConfig(config.id)"
+                                    title="{{ config.query }}">
+                                {{ config.query }}
+                            </button>
+                        }
+                    </div>
+                 </div>
+
+                 <div class="rounded-xl border bg-card text-card-foreground shadow-sm p-4">
+                    <h3 class="font-semibold mb-4">Great Deals Threshold</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <label hlmLabel for="score-slider">Minimum AI Score</label>
+                            <span class="text-sm font-medium text-muted-foreground">{{ minScore() }}</span>
+                        </div>
+                        <input id="score-slider" type="range" min="0" max="100" [ngModel]="minScore()" (ngModelChange)="minScore.set($event)" class="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary">
+                        <p class="text-xs text-muted-foreground">Only show results with an AI confidence score above this value.</p>
+                    </div>
+                 </div>
+
+            </div>
+
+            <!-- Main Content: Results -->
+            <div class="lg:col-span-9 h-full min-h-0 flex flex-col">
+              <lifeos-results-grid [configId]="selectedConfigId()" [minScore]="minScore()" class="block w-full h-full"></lifeos-results-grid>
+            </div>
+        </div>
     </div>
 
-    <!-- Main Content: Results -->
-    <div class="lg:col-span-9">
-      <lifeos-results-grid class="block w-full"></lifeos-results-grid>
+    <div hlmTabsContent="config" class="flex-1 overflow-auto pb-6">
+        <lifeos-search-config class="block w-full max-w-4xl"></lifeos-search-config>
     </div>
-  </div>
+  </hlm-tabs>
 </div>
 

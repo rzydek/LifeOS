@@ -82,24 +82,34 @@ export class SearchService {
   }
 
   async getOffers(filter: OfferFilterDto) {
-    const { searchConfigId, onlyGreatDeals, minAiScore } = filter;
+    const { searchConfigId, minScore } = filter;
+    
+    const where: any = {
+      isActive: true,
+    };
+
+    if (searchConfigId) {
+      where.searchConfigId = searchConfigId;
+    }
+
+    if (minScore !== undefined) {
+      where.aiScore = {
+        gte: minScore,
+      };
+    }
     
     return this.prisma.scrapedOffer.findMany({
-      where: {
-        searchConfigId: searchConfigId,
-        isActive: true,
-        ...(onlyGreatDeals ? { aiScore: { gte: minAiScore || 80 } } : {}),
-      },
+      where,
       orderBy: [
         { detectedAt: 'desc' },
-        { aiScore: 'desc' },
       ],
       include: {
         priceHistory: {
           orderBy: { recordedAt: 'desc' },
           take: 5,
-        }
-      }
+        },
+      },
+      take: 100,
     });
   }
   

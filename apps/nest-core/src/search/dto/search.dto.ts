@@ -67,14 +67,10 @@ export class OfferFilterDto {
   @IsOptional()
   searchConfigId?: string;
 
-  @IsBoolean()
-  @IsOptional()
-  @Transform(({ value }) => value === 'true' || value === true)
-  onlyGreatDeals?: boolean;
-
   @IsNumber()
   @IsOptional()
-  minAiScore?: number;
+  @Transform(({ value }) => parseInt(value, 10))
+  minScore?: number;
 }
 
 export class UpdateSearchConfigDto {

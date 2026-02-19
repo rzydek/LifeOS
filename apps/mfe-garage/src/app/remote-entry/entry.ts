@@ -3,7 +3,7 @@ import { GarageWelcomeComponent } from './garage.component';
 
 @Component({
   imports: [GarageWelcomeComponent],
-  selector: 'app-mfe-garage-entry',
-  template: `<app-garage></app-garage>`,
+  selector: 'lifeos-mfe-garage-entry',
+  template: `<lifeos-garage></lifeos-garage>`,
 })
 export class RemoteEntry {}

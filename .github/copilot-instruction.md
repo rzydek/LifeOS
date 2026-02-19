@@ -1,0 +1,1 @@
+For UI components use modern angular template syntax and signals, we're working in zoneless angular app

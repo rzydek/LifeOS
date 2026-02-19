@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, effect } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PartsSniperService } from '../data-access/parts-sniper.service';
@@ -20,7 +20,6 @@ export class SearchConfigComponent implements OnInit {
   categories = signal<Category[]>([]);
   locations = signal<Location[]>([]);
 
-  // Temporary state for form selection
   selectedRegionId = signal('');
   selectedCityId = signal('');
 
@@ -29,12 +28,11 @@ export class SearchConfigComponent implements OnInit {
     categoryId: '',
     locationId: '',
     radius: 0,
-    checkInterval: 3600 // 1 hour default
+    checkInterval: 3600
   });
   
   readonly radii = [0, 2, 5, 10, 15, 30, 50, 75, 100];
 
-  // Dialog States
   categoryDialogState = signal<'open' | 'closed'>('closed');
   locationDialogState = signal<'open' | 'closed'>('closed');
 
@@ -46,8 +44,6 @@ export class SearchConfigComponent implements OnInit {
   cities = computed(() => this.locations().filter(l => l.type === 'city'));
 
   filteredCities = computed(() => {
-    // If we select a region, ideally filter cities in that region.
-    // If no region selected, show all cities.
     const regionId = this.selectedRegionId();
     if (!regionId) return this.cities();
     
@@ -55,7 +51,7 @@ export class SearchConfigComponent implements OnInit {
     return inRegion.length > 0 ? inRegion : this.cities();
   });
 
-  constructor(private service: PartsSniperService) {}
+  private service = inject(PartsSniperService);
 
   ngOnInit() {
     this.service.getConfigs().subscribe((data) => this.configs.set(data));
@@ -122,7 +118,6 @@ export class SearchConfigComponent implements OnInit {
     });
   }
 
-  // Location Dialog Methods
   openAddLocationDialog() {
     this.locationDialogState.set('open');
   }
@@ -141,7 +136,6 @@ export class SearchConfigComponent implements OnInit {
     });
   }
 
-  // Setters for Signals used in template
   setQuery(query: string) {
     this.newConfig.update(c => ({...c, query}));
   }
@@ -179,7 +173,7 @@ export class SearchConfigComponent implements OnInit {
     this.newLocation.update(l => ({...l, name}));
   }
   
-  setNewLocationType(type: 'city' | 'region') { // Cast to correct type or string
+  setNewLocationType(type: 'city' | 'region') {
     this.newLocation.update(l => ({...l, type: type as any}));
   }
 

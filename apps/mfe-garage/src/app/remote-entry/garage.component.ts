@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-garage',
+    selector: 'lifeos-garage',
     imports: [CommonModule, RouterLink],
     template: `
       <div class="p-8">
@@ -13,7 +13,6 @@ import { RouterLink } from '@angular/router';
             <h2 class="text-xl font-bold mb-2">Parts Sniper 🎯</h2>
             <p>Automated OLX Monitoring & AI Rating</p>
           </a>
-          <!-- Add more tools later -->
         </div>
       </div>
     `,
