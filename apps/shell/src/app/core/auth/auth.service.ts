@@ -1,47 +1,102 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
-
-export interface AuthResponse {
-  access_token: string;
-}
+import {
+    Observable,
+    tap,
+    catchError,
+    throwError,
+    Subscription,
+    timer,
+} from 'rxjs';
+import { TokenService, AuthResponse } from './token.service';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
-export class AuthService {
-  private readonly apiUrl = '/api/auth';
-  private readonly http = inject(HttpClient);
-  private readonly router = inject(Router);
-  
-  private readonly tokenKey = 'access_token';
+export class AuthService implements OnDestroy {
+    private readonly apiUrl = '/api/auth';
+    private readonly http = inject(HttpClient);
+    private readonly router = inject(Router);
+    private readonly tokenService = inject(TokenService);
 
-  login(credentials: { email: string; password: string }): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      tap((response) => {
-        this.setToken(response.access_token);
-        this.router.navigate(['/']);
-      })
-    );
-  }
+    private refreshSubscription?: Subscription;
 
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/login']);
-  }
+    constructor() {
+        this.scheduleRefresh();
+    }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
+    ngOnDestroy(): void {
+        this.unscheduleRefresh();
+    }
 
-  isAuthenticated(): boolean {
-    const token = this.getToken();
-    return !!token;
-  }
+    login(credentials: {
+        email: string;
+        password: string;
+    }): Observable<AuthResponse> {
+        return this.http
+            .post<AuthResponse>(`${this.apiUrl}/login`, credentials)
+            .pipe(
+                tap((response) => {
+                    this.setSession(response);
+                    this.router.navigate(['/']);
+                }),
+            );
+    }
 
-  private setToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
-  }
+    logout(): void {
+        this.tokenService.clear();
+        this.unscheduleRefresh();
+        this.router.navigate(['/login']);
+    }
+
+    isAuthenticated(): boolean {
+        const token = this.tokenService.getToken();
+        return !!token;
+    }
+
+    refreshToken(): Observable<AuthResponse> {
+        const refreshToken = this.tokenService.getRefreshToken();
+        if (!refreshToken) {
+            return throwError(() => new Error('No refresh token'));
+        }
+
+        return this.http
+            .post<AuthResponse>(`${this.apiUrl}/refresh`, {
+                refresh_token: refreshToken,
+            })
+            .pipe(
+                tap((response) => this.setSession(response)),
+                catchError((err) => {
+                    this.logout();
+                    return throwError(() => err);
+                }),
+            );
+    }
+
+    private setSession(authResult: AuthResponse): void {
+        this.tokenService.setSession(authResult);
+
+        const expiresIn = authResult.expires_in || 900;
+        const refreshTime = (expiresIn - 60) * 1000;
+
+        this.unscheduleRefresh();
+        this.refreshSubscription = timer(Math.max(1000, refreshTime)).subscribe(
+            () => {
+                this.refreshToken().subscribe();
+            },
+        );
+    }
+
+    private scheduleRefresh(): void {
+        if (this.tokenService.getRefreshToken()) {
+            this.refreshToken().subscribe();
+        }
+    }
+
+    private unscheduleRefresh(): void {
+        if (this.refreshSubscription) {
+            this.refreshSubscription.unsubscribe();
+        }
+    }
 }
-

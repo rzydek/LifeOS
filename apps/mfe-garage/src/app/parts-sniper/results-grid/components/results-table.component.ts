@@ -1,4 +1,4 @@
-import { Component, input, output, inject } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrapedOffer } from '../../data-access/parts-sniper.model';
 import { HlmTableImports } from '@spartan-ng/helm/table';

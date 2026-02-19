@@ -8,7 +8,6 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <!-- Language Switcher -->
             <div class="relative">
                 <button hlmBtn variant="ghost" size="sm" [hlmDropdownMenuTrigger]="langMenu" class="w-12 px-0">
                     <span class="font-bold text-sm">{{ i18n.currentLang().toUpperCase() }}</span>
@@ -25,13 +24,11 @@
                 </ng-template>
             </div>
        
-            <!-- Theme Switcher -->
             <button hlmBtn variant="ghost" size="icon" (click)="theme.toggleTheme()">
                 <ng-icon hlm [name]="theme.isDark() ? 'lucideMoon' : 'lucideSun'" class="h-4 w-4" />
                 <span class="sr-only">{{ 'header.theme' | translate }}</span>
             </button>
 
-            <!-- User Menu -->
             <div class="relative ml-2">
                 <button hlmBtn variant="ghost" size="icon" [hlmDropdownMenuTrigger]="userMenu">
                     <hlm-avatar>
@@ -52,7 +49,7 @@
                             <span>{{ 'nav.settings' | translate }}</span>
                         </button>
                         <div hlmDropdownMenuSeparator></div>
-                        <button hlmDropdownMenuItem>
+                        <button hlmDropdownMenuItem (click)="logout()">
                             <ng-icon hlm name="lucideLogOut" class="mr-2 h-4 w-4" />
                             <span>{{ 'header.logout' | translate }}</span>
                         </button>

@@ -1,10 +1,13 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
+import { TokenService } from './token.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
-  const token = authService.getToken();
+  const tokenService = inject(TokenService);
+  const router = inject(Router);
+  const token = tokenService.getToken();
 
   if (token) {
     req = req.clone({
@@ -14,6 +17,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
-  return next(req);
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        tokenService.clear();
+        router.navigate(['/login']);
+      }
+      return throwError(() => error);
+    })
+  );
 };
 

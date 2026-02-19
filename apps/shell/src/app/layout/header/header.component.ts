@@ -9,6 +9,7 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideUser, lucideMenu, lucideLogOut, lucideSettings, lucideSun, lucideMoon, lucideLanguages } from '@ng-icons/lucide';
 import { TranslatePipe } from '@lifeos-nexus/ui';
 import { I18nService, ThemeService } from '@lifeos-nexus/data-access';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -28,4 +29,9 @@ import { I18nService, ThemeService } from '@lifeos-nexus/data-access';
 export class HeaderComponent {
     i18n = inject(I18nService);
     theme = inject(ThemeService);
+    auth = inject(AuthService);
+
+    logout() {
+        this.auth.logout();
+    }
 }
