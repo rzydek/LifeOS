@@ -41,6 +41,7 @@ export class SearchConfigComponent implements OnInit {
     configs = signal<SearchConfig[]>([]);
     categories = signal<Category[]>([]);
     locations = signal<Location[]>([]);
+    personas = signal<any[]>([]);
 
     regions = computed(() =>
         this.locations().filter((l) => l.type === 'region'),
@@ -48,6 +49,7 @@ export class SearchConfigComponent implements OnInit {
 
     ngOnInit() {
         this.service.getConfigs().subscribe((data) => this.configs.set(data));
+        this.service.getPersonas().subscribe((data) => this.personas.set(data));
         this.service
             .getCategories()
             .subscribe((data) => this.categories.set(data));

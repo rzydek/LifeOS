@@ -389,7 +389,8 @@ export const ModelName = {
   Location: 'Location',
   SearchConfig: 'SearchConfig',
   ScrapedOffer: 'ScrapedOffer',
-  OfferPriceHistory: 'OfferPriceHistory'
+  OfferPriceHistory: 'OfferPriceHistory',
+  ExpertPersona: 'ExpertPersona'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "category" | "location" | "searchConfig" | "scrapedOffer" | "offerPriceHistory"
+    modelProps: "user" | "category" | "location" | "searchConfig" | "scrapedOffer" | "offerPriceHistory" | "expertPersona"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ExpertPersona: {
+      payload: Prisma.$ExpertPersonaPayload<ExtArgs>
+      fields: Prisma.ExpertPersonaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExpertPersonaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExpertPersonaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>
+        }
+        findFirst: {
+          args: Prisma.ExpertPersonaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExpertPersonaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>
+        }
+        findMany: {
+          args: Prisma.ExpertPersonaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>[]
+        }
+        create: {
+          args: Prisma.ExpertPersonaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>
+        }
+        createMany: {
+          args: Prisma.ExpertPersonaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExpertPersonaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>[]
+        }
+        delete: {
+          args: Prisma.ExpertPersonaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>
+        }
+        update: {
+          args: Prisma.ExpertPersonaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExpertPersonaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExpertPersonaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExpertPersonaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>[]
+        }
+        upsert: {
+          args: Prisma.ExpertPersonaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpertPersonaPayload>
+        }
+        aggregate: {
+          args: Prisma.ExpertPersonaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExpertPersona>
+        }
+        groupBy: {
+          args: Prisma.ExpertPersonaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExpertPersonaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExpertPersonaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExpertPersonaCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -933,6 +1008,8 @@ export const SearchConfigScalarFieldEnum = {
   isActive: 'isActive',
   lastRunAt: 'lastRunAt',
   checkInterval: 'checkInterval',
+  userIntent: 'userIntent',
+  personaId: 'personaId',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -968,6 +1045,19 @@ export const OfferPriceHistoryScalarFieldEnum = {
 } as const
 
 export type OfferPriceHistoryScalarFieldEnum = (typeof OfferPriceHistoryScalarFieldEnum)[keyof typeof OfferPriceHistoryScalarFieldEnum]
+
+
+export const ExpertPersonaScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  instruction: 'instruction',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExpertPersonaScalarFieldEnum = (typeof ExpertPersonaScalarFieldEnum)[keyof typeof ExpertPersonaScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1215,6 +1305,7 @@ export type GlobalOmitConfig = {
   searchConfig?: Prisma.SearchConfigOmit
   scrapedOffer?: Prisma.ScrapedOfferOmit
   offerPriceHistory?: Prisma.OfferPriceHistoryOmit
+  expertPersona?: Prisma.ExpertPersonaOmit
 }
 
 /* Types for Logging */

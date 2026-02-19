@@ -62,12 +62,22 @@ export class SchedulerService implements OnModuleInit {
   }
 
   private async scheduleSearch(config: any) {
+    let personaInstruction = undefined;
+    if (config.personaId) {
+        const persona = await this.prisma.expertPersona.findUnique({ where: { id: config.personaId } });
+        if (persona) {
+            personaInstruction = persona.instruction;
+        }
+    }
+
     const payload: any = {
       type: 'scrape',
       configId: config.id,
       query: config.query,
       source: config.source || 'olx',
       parameters: config.parameters || {},
+      userIntent: config.userIntent,
+      persona: personaInstruction,
     };
 
     try {

@@ -62,7 +62,12 @@
                         class="shrink-0"
                         title="Add Category ID"
                     >
-                        <ng-icon hlmIcon name="lucidePlus" size="sm" class="h-4 w-4" />
+                        <ng-icon
+                            hlmIcon
+                            name="lucidePlus"
+                            size="sm"
+                            class="h-4 w-4"
+                        />
                     </button>
                 </div>
 
@@ -139,7 +144,10 @@
 
         @if (newConfig().source !== 'olx') {
             <p class="text-sm text-muted-foreground italic text-center py-2">
-                {{ 'config.comingSoon' | translate:{ source: newConfig().source } }}
+                {{
+                    'config.comingSoon'
+                        | translate: { source: newConfig().source }
+                }}
             </p>
         }
 
@@ -153,6 +161,42 @@
             >
                 {{ 'config.manageLocations' | translate }}
             </button>
+        </div>
+
+        <div class="space-y-2 pt-2 border-t">
+            <h4 class="text-xs font-medium text-muted-foreground uppercase">
+                {{ 'config.aiSettings' | translate }}
+            </h4>
+
+            <div class="grid grid-cols-1 gap-2">
+                <brn-select
+                    class="inline-block w-full"
+                    [ngModel]="newConfig().personaId"
+                    (ngModelChange)="setPersonaId($event)"
+                    [placeholder]="'config.selectPersona' | translate"
+                >
+                    <hlm-select-trigger class="w-full">
+                        <hlm-select-value
+                        ></hlm-select-value>
+                    </hlm-select-trigger>
+                    <hlm-select-content class="w-full">
+                        <hlm-option value="">
+                            {{ 'config.defaultPersona' | translate }}
+                        </hlm-option>
+                        @for (p of personas(); track p.id) {
+                            <hlm-option [value]="p.id">{{ p.name }}</hlm-option>
+                        }
+                    </hlm-select-content>
+                </brn-select>
+
+                <textarea
+                    hlmInput
+                    [ngModel]="newConfig().userIntent"
+                    (ngModelChange)="setUserIntent($event)"
+                    [placeholder]="'config.intentPlaceholder' | translate"
+                    class="min-h-[60px] text-sm w-full p-2 border rounded-md"
+                ></textarea>
+            </div>
         </div>
     </div>
 

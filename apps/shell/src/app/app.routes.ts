@@ -15,6 +15,10 @@ export const appRoutes: Route[] = [
         canActivate: [authGuard], 
         children: [
             {
+                path: 'personas',
+                loadComponent: () => import('./pages/personas/personas.component').then(m => m.PersonasComponent)
+            },
+            {
                 path: 'knowledge',
                 loadChildren: () =>
                     import('mfeKnowledge/Routes').then((m) => m!.remoteRoutes),

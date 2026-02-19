@@ -13,6 +13,7 @@ const DICTIONARY: Record<Language, Record<string, string>> = {
         'nav.knowledge': 'Knowledge Base',
         'nav.tasks': 'Tasks',
         'nav.garage': 'Garage',
+        'nav.personas': 'Personas',
         'nav.settings': 'Settings',
 
         // Header
@@ -73,6 +74,10 @@ const DICTIONARY: Record<Language, Record<string, string>> = {
         'config.comingSoon': 'Configuration for {{source}} is coming soon.',
         'config.manageLocations': 'Manage Locations...',
         'config.monitorQuery': 'Monitor Query',
+        'config.aiSettings': 'AI Settings',
+        'config.selectPersona': 'Select Persona (Default: General)',
+        'config.defaultPersona': 'Default (General)',
+        'config.intentPlaceholder': "Specific requirements/intent (e.g. 'Looking for a restoration project')",
 
         // Auth
         'auth.loginTitle': 'Login to your account',
@@ -97,6 +102,22 @@ const DICTIONARY: Record<Language, Record<string, string>> = {
         'form.city': 'City',
         'form.none': 'None / Unknown',
 
+        // Personas
+        'personas.title': 'AI Personas',
+        'personas.subtitle': 'Manage expert profiles for offer analysis',
+        'personas.create': 'Create Persona',
+        'personas.edit': 'Edit Persona',
+        'personas.default': 'Default',
+        'personas.noPersonas': 'No personas found.',
+        'personas.form.name': 'Name',
+        'personas.form.description': 'Description',
+        'personas.form.instruction': 'System Instruction',
+        'personas.form.isDefault': 'Set as Default',
+        'personas.form.instructionHelp': 'Detailed instructions for the AI regarding personality, focus areas, and evaluation criteria.',
+        'personas.form.placeholderName': 'e.g. Vintage Audio Expert',
+        'personas.form.placeholderDesc': 'Brief description of expertise',
+        'personas.form.placeholderInstr': 'You are an expert in...',
+
         // Languages
         'lang.en': 'English',
         'lang.pl': 'Polski',
@@ -111,6 +132,7 @@ const DICTIONARY: Record<Language, Record<string, string>> = {
         'nav.knowledge': 'Baza Wiedzy',
         'nav.tasks': 'Zadania',
         'nav.garage': 'Garaż',
+        'nav.personas': 'Persony',
         'nav.settings': 'Ustawienia',
 
         // Header
@@ -171,6 +193,10 @@ const DICTIONARY: Record<Language, Record<string, string>> = {
         'config.comingSoon': 'Konfiguracja dla {{source}} wkrótce.',
         'config.manageLocations': 'Zarządzaj Lokalizacjami...',
         'config.monitorQuery': 'Monitoruj Zapytanie',
+        'config.aiSettings': 'Ustawienia AI',
+        'config.selectPersona': 'Wybierz Personę (Domyślna: Ogólna)',
+        'config.defaultPersona': 'Domyślna (Ogólna)',
+        'config.intentPlaceholder': "Konkretne wymagania/cel (np. 'Szukam projektu do renowacji')",
 
         // Auth
         'auth.loginTitle': 'Zaloguj się na konto',
@@ -193,6 +219,22 @@ const DICTIONARY: Record<Language, Record<string, string>> = {
         'form.region': 'Region',
         'form.city': 'Miasto',
         'form.none': 'Brak / Nieznany',
+
+        // Personas
+        'personas.title': 'Persony AI',
+        'personas.subtitle': 'Zarządzaj profilami ekspertów do analizy ofert',
+        'personas.create': 'Utwórz Personę',
+        'personas.edit': 'Edytuj Personę',
+        'personas.default': 'Domyślna',
+        'personas.noPersonas': 'Nie znaleziono person.',
+        'personas.form.name': 'Nazwa',
+        'personas.form.description': 'Opis',
+        'personas.form.instruction': 'Instrukcja Systemowa',
+        'personas.form.isDefault': 'Ustaw jako domyślną',
+        'personas.form.instructionHelp': 'Szczegółowe instrukcje dla AI dotyczące osobowości, obszarów zainteresowań i kryteriów oceny.',
+        'personas.form.placeholderName': 'np. Ekspert Audio Vintage',
+        'personas.form.placeholderDesc': 'Krótki opis ekspertyzy',
+        'personas.form.placeholderInstr': 'Jesteś ekspertem w...',
 
         // Languages
         'lang.en': 'Angielski',

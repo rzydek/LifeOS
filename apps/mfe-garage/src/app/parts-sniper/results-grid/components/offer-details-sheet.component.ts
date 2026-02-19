@@ -7,12 +7,12 @@ import {
     viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScrapedOffer } from '../../data-access/parts-sniper.model';
+import { ScrapedOffer, AiReasoning } from '../../data-access/parts-sniper.model';
 import { HlmSheet, HlmSheetImports } from '@spartan-ng/helm/sheet';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmIconImports } from '@spartan-ng/helm/icon';
 import { provideIcons } from '@ng-icons/core';
-import { lucideExternalLink } from '@ng-icons/lucide';
+import { lucideExternalLink, lucideCheck, lucideX } from '@ng-icons/lucide';
 import { TranslatePipe } from '@lifeos-nexus/ui';
 import { I18nService } from '@lifeos-nexus/data-access';
 
@@ -26,19 +26,18 @@ import { I18nService } from '@lifeos-nexus/data-access';
         HlmIconImports,
         TranslatePipe,
     ],
-    providers: [provideIcons({ lucideExternalLink })],
+    providers: [provideIcons({ lucideExternalLink, lucideCheck, lucideX })],
     templateUrl: './offer-details-sheet.component.html',
 })
 export class OfferDetailsSheetComponent {
     offer = input<ScrapedOffer | null>(null);
     sheet = viewChild.required<HlmSheet>('sheetRef');
-    aiReasoning = signal<string>('');
+    aiReasoning = signal<any>(null);
 
     private i18n = inject(I18nService);
 
     constructor() {
         effect(() => {
-            console.log('current lang:', this.i18n.currentLang());
             this.aiReasoning.set(
                 this.getReasoning(this.offer() || ({} as ScrapedOffer)),
             );
@@ -49,14 +48,21 @@ export class OfferDetailsSheetComponent {
         this.sheet().open();
     }
 
-    getReasoning(offer: ScrapedOffer): string {
-        if (!offer.aiReasoning) return '';
-        if (typeof offer.aiReasoning === 'string') return offer.aiReasoning;
-        return (
-            offer.aiReasoning[this.i18n.currentLang()] ||
-            offer.aiReasoning['en'] ||
-            ''
-        );
+    getReasoning(offer: ScrapedOffer): any {
+        if (!offer.aiReasoning) return null;
+        if (typeof offer.aiReasoning === 'string') {
+            try {
+                return JSON.parse(offer.aiReasoning);
+            } catch {
+                return { summary: { en: offer.aiReasoning } };
+            }
+        }
+        return offer.aiReasoning;
+    }
+    
+    getSummary(reasoning: any): string {
+        if (!reasoning || !reasoning.summary) return '';
+        return reasoning.summary[this.i18n.currentLang()] || reasoning.summary['en'] || '';
     }
 
     getScoreClass(score: number): string {

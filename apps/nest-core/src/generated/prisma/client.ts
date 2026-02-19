@@ -69,3 +69,8 @@ export type ScrapedOffer = Prisma.ScrapedOfferModel
  * 
  */
 export type OfferPriceHistory = Prisma.OfferPriceHistoryModel
+/**
+ * Model ExpertPersona
+ * 
+ */
+export type ExpertPersona = Prisma.ExpertPersonaModel

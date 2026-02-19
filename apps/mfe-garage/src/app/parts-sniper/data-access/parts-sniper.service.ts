@@ -46,6 +46,10 @@ export class PartsSniperService {
     return this.http.get<Location[]>(`${this.apiUrl}/locations`);
   }
 
+  getPersonas(): Observable<any[]> {
+    return this.http.get<any[]>('/api/personas');
+  }
+
   addLocation(location: Location): Observable<Location> {
     return this.http.post<Location>(`${this.apiUrl}/locations`, location);
   }

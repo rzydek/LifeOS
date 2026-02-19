@@ -1,0 +1,87 @@
+<div class="container mx-auto py-8">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">{{ 'personas.title' | translate }}</h1>
+      <p class="text-muted-foreground mt-1">{{ 'personas.subtitle' | translate }}</p>
+    </div>
+    <button hlmBtn (click)="openCreateDialog()">
+      <ng-icon hlmIcon name="lucidePlus" class="mr-2 h-4 w-4" />
+      {{ 'personas.create' | translate }}
+    </button>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    @for (persona of personas(); track persona.id) {
+      <div class="bg-card rounded-xl border p-6 flex flex-col h-full relative group">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-semibold text-lg">{{ persona.name }}</h3>
+              @if (persona.isDefault) {
+                <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-full font-medium">{{ 'personas.default' | translate }}</span>
+              }
+            </div>
+            <p class="text-sm text-muted-foreground mt-1 line-clamp-2">{{ persona.description }}</p>
+          </div>
+          
+          <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button hlmBtn variant="ghost" size="icon" (click)="editPersona(persona)">
+              <ng-icon hlmIcon name="lucidePencil" size="sm" />
+            </button>
+            @if (!persona.isDefault) {
+              <button hlmBtn variant="ghost" size="icon" class="text-destructive hover:text-destructive" (click)="deletePersona(persona)">
+                <ng-icon hlmIcon name="lucideTrash" size="sm" />
+              </button>
+            }
+          </div>
+        </div>
+        
+        <div class="mt-auto pt-4 border-t">
+          <p class="text-xs font-mono text-muted-foreground bg-muted p-2 rounded line-clamp-4">
+            {{ persona.instruction }}
+          </p>
+        </div>
+      </div>
+    } @empty {
+        <div class="col-span-full text-center py-10 text-muted-foreground">
+            {{ 'personas.noPersonas' | translate }}
+        </div>
+    }
+  </div>
+</div>
+
+<hlm-sheet side="right" #sheetRef>
+    <hlm-sheet-content *hlmSheetPortal="let ctx">
+        <hlm-sheet-header>
+            <h3 hlmSheetTitle>{{ (isEditing() ? 'personas.edit' : 'personas.create') | translate }}</h3>
+        </hlm-sheet-header>
+        
+        <div class="grid gap-4 py-4">
+            <div class="grid gap-2">
+                <label hlmLabel for="name">{{ 'personas.form.name' | translate }}</label>
+                <input hlmInput id="name" [(ngModel)]="currentPersona.name" [placeholder]="'personas.form.placeholderName' | translate" />
+            </div>
+            
+            <div class="grid gap-2">
+                <label hlmLabel for="description">{{ 'personas.form.description' | translate }}</label>
+                <input hlmInput id="description" [(ngModel)]="currentPersona.description" [placeholder]="'personas.form.placeholderDesc' | translate" />
+            </div>
+            
+            <div class="grid gap-2">
+                <label hlmLabel for="instruction">{{ 'personas.form.instruction' | translate }}</label>
+                <textarea hlmInput id="instruction" [(ngModel)]="currentPersona.instruction" class="min-h-[200px] font-mono text-sm" [placeholder]="'personas.form.placeholderInstr' | translate"></textarea>
+                <p class="text-xs text-muted-foreground">{{ 'personas.form.instructionHelp' | translate }}</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <input type="checkbox" id="isDefault" [(ngModel)]="currentPersona.isDefault" class="h-4 w-4 rounded border-gray-300" />
+                <label hlmLabel for="isDefault">{{ 'personas.form.isDefault' | translate }}</label>
+            </div>
+        </div>
+
+        <hlm-sheet-footer>
+            <button hlmBtn variant="outline" (click)="sheet().close()">{{ 'actions.cancel' | translate }}</button>
+            <button hlmBtn (click)="savePersona()" [disabled]="!isValid()">{{ 'actions.save' | translate }}</button>
+        </hlm-sheet-footer>
+    </hlm-sheet-content>
+</hlm-sheet>

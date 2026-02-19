@@ -11,13 +11,13 @@ class ScraperService:
     def process_task(self, db: Session, task_data: dict):
         config_id = task_data.get("configId")
         query = task_data.get("query")
+        user_intent = task_data.get("userIntent", "")
+        persona = task_data.get("persona") 
         
         if not query:
             logger.error("Task missing 'query' parameter.")
             return
 
-        # Determine which scraper to use. Default to 'olx' for now if not specified.
-        # Future: task_data could contain "source": "olx" or "ebay"
         source = task_data.get("source", "olx")
         
         try:
@@ -26,13 +26,11 @@ class ScraperService:
             logger.error(f"Scraper error: {e}")
             return
 
-        # Flatten parameters into kwargs
         parameters = task_data.get('parameters', {})
         
-        logger.info(f"Processing scrape task: {query} (Config: {config_id}, Params: {parameters}, Source: {source})")
+        logger.info(f"Processing scrape task: {query} (Config: {config_id}, Params: {parameters}, Source: {source}, Persona: {persona})")
         
         try:
-            # Pass all parameters as kwargs
             results = scraper.search(query=query, **parameters)
             
             if isinstance(results, dict) and "error" in results:
@@ -43,12 +41,13 @@ class ScraperService:
             logger.info(f"Found {len(listings)} listings from {source}.")
             
             if listings:
-                self.save_results(db, config_id, listings, query_text=query)
+                self.save_results(db, config_id, listings, query_text=query, user_intent=user_intent, persona=persona)
             
         except Exception as e:
             logger.error(f"Error executing scrape: {e}")
 
-    def save_results(self, session: Session, config_id, listings, query_text=""):
+    def save_results(self, session: Session, config_id, listings, query_text="", user_intent="", persona="default"):
+
         try:
             unique_listings = {item['id']: item for item in listings}.values()
             
@@ -67,7 +66,6 @@ class ScraperService:
 
                 current_price_float = float(raw_price) if raw_price is not None else None
 
-                print(f"Processing listing: {item_title} (Description: {item_description}) - Existing offer: {'Yes' if existing_offer else 'No'}")
                 if existing_offer:
                     existing_offer.lastSeenAt = datetime.utcnow()
                     existing_offer.isActive = True
@@ -86,8 +84,8 @@ class ScraperService:
                          price_changed = True 
 
                     if (existing_offer.aiScore is None or price_changed) and query_text:
-                        logger.info(f"Re-evaluating AI score for {item_title} due to missing score or price change.")
-                        score, reasoning = ai_service.evaluate_offer(query_text, item_title, item_description, raw_price, currency)
+                        logger.info(f"Re-evaluating AI score for {item_title} due to missing score or price change. Persona: {persona}")
+                        score, reasoning = ai_service.evaluate_offer(query_text, item_title, item_description, raw_price, currency, user_intent=user_intent, persona=persona)
                         if score is not None:
                             existing_offer.aiScore = score
                             existing_offer.aiReasoning = json.dumps(reasoning) if reasoning else None
@@ -105,7 +103,7 @@ class ScraperService:
                 else:
                     score, reasoning = None, None
                     if query_text:
-                        score, reasoning = ai_service.evaluate_offer(query_text, item_title, item_description, raw_price, currency)
+                        score, reasoning = ai_service.evaluate_offer(query_text, item_title, item_description, raw_price, currency, user_intent=user_intent, persona=persona)
 
                     new_offer_id = str(uuid4())
                     new_offer = ScrapedOffer(

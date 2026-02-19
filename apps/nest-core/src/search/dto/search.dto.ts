@@ -21,6 +21,14 @@ export class CreateSearchConfigDto {
   @IsBoolean()
   @IsOptional()
   isActive?: boolean;
+
+  @IsString()
+  @IsOptional()
+  userIntent?: string;
+
+  @IsString()
+  @IsOptional()
+  personaId?: string;
 }
 
 export class CreateCategoryDto {
@@ -87,4 +95,12 @@ export class UpdateSearchConfigDto {
   @IsBoolean()
   @IsOptional()
   isActive?: boolean;
+
+  @IsString()
+  @IsOptional()
+  userIntent?: string;
+
+  @IsString()
+  @IsOptional()
+  personaId?: string;
 }

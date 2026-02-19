@@ -11,6 +11,7 @@ import {
     lucideBookOpen,
     lucideSettings,
     lucidePackage,
+    lucideUsers,
 } from '@ng-icons/lucide';
 import { TranslatePipe } from '@lifeos-nexus/ui';
 
@@ -29,11 +30,12 @@ import { TranslatePipe } from '@lifeos-nexus/ui';
     providers: [
         provideIcons({
             lucideLayoutDashboard,
+            lucideGalleryVerticalEnd,
             lucideBox,
             lucideBookOpen,
             lucideSettings,
-            lucideGalleryVerticalEnd,
             lucidePackage,
+            lucideUsers,
         }),
     ],
     templateUrl: './sidebar.component.html',

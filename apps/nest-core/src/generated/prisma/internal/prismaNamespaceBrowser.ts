@@ -56,7 +56,8 @@ export const ModelName = {
   Location: 'Location',
   SearchConfig: 'SearchConfig',
   ScrapedOffer: 'ScrapedOffer',
-  OfferPriceHistory: 'OfferPriceHistory'
+  OfferPriceHistory: 'OfferPriceHistory',
+  ExpertPersona: 'ExpertPersona'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -116,6 +117,8 @@ export const SearchConfigScalarFieldEnum = {
   isActive: 'isActive',
   lastRunAt: 'lastRunAt',
   checkInterval: 'checkInterval',
+  userIntent: 'userIntent',
+  personaId: 'personaId',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -151,6 +154,19 @@ export const OfferPriceHistoryScalarFieldEnum = {
 } as const
 
 export type OfferPriceHistoryScalarFieldEnum = (typeof OfferPriceHistoryScalarFieldEnum)[keyof typeof OfferPriceHistoryScalarFieldEnum]
+
+
+export const ExpertPersonaScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  instruction: 'instruction',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExpertPersonaScalarFieldEnum = (typeof ExpertPersonaScalarFieldEnum)[keyof typeof ExpertPersonaScalarFieldEnum]
 
 
 export const SortOrder = {

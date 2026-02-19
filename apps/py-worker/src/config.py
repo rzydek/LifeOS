@@ -9,3 +9,6 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://lifeos:lifeos_password@lo
 if "?" in DATABASE_URL:
     DATABASE_URL = DATABASE_URL.split("?")[0]
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://ollama:11434")
+AI_PROVIDER = os.getenv("AI_PROVIDER", "ollama")
+AI_MODEL = os.getenv("AI_MODEL", "llama3")
+

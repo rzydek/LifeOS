@@ -36,6 +36,7 @@ import { TranslatePipe } from '@lifeos-nexus/ui';
 export class SearchConfigFormComponent {
     categories = input.required<Category[]>();
     locations = input.required<Location[]>();
+    personas = input<any[]>([]);
 
     configAdded = output<Partial<SearchConfig>>();
     openCategoryDialog = output<void>();
@@ -48,6 +49,8 @@ export class SearchConfigFormComponent {
         locationId: string;
         radius: number;
         checkInterval: number;
+        userIntent: string;
+        personaId: string;
     }>({
         query: '',
         source: 'olx',
@@ -55,6 +58,8 @@ export class SearchConfigFormComponent {
         locationId: '',
         radius: 0,
         checkInterval: 3600,
+        userIntent: '',
+        personaId: '',
     });
 
     selectedRegionId = signal('');
@@ -100,6 +105,8 @@ export class SearchConfigFormComponent {
             source: config.source,
             checkInterval: config.checkInterval,
             parameters: parameters,
+            userIntent: config.userIntent || undefined,
+            personaId: config.personaId || undefined,
         };
 
         this.configAdded.emit(finalConfig);
@@ -109,6 +116,8 @@ export class SearchConfigFormComponent {
             source: 'olx',
             categoryId: '',
             locationId: '',
+            userIntent: '',
+            personaId: '',
             radius: 0,
             checkInterval: 3600,
         });
@@ -144,5 +153,17 @@ export class SearchConfigFormComponent {
 
     setRadius(radius: number) {
         this.newConfig.update((c) => ({ ...c, radius: radius }));
+    }
+
+    setCheckInterval(interval: number) {
+        this.newConfig.update((c) => ({ ...c, checkInterval: interval }));
+    }
+    
+    setUserIntent(userIntent: string) {
+        this.newConfig.update((c) => ({ ...c, userIntent }));
+    }
+
+    setPersonaId(personaId: string) {
+        this.newConfig.update((c) => ({ ...c, personaId }));
     }
 }

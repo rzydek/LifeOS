@@ -29,6 +29,7 @@ export class SearchService {
     return this.prisma.searchConfig.findMany({
       where: { userId },
       orderBy: { createdAt: 'desc' },
+      include: { persona: true },
     });
   }
 

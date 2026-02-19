@@ -53,10 +53,14 @@ model SearchConfig {
   isActive      Boolean  @default(true)
   lastRunAt     DateTime?
   checkInterval Int      @default(3600) // seconds
+  userIntent    String? // Specific prompt for AI analysis (e.g. "Looking for restoration project under 2000EUR")
+  personaId     String? // Which expert persona to use
+  persona       ExpertPersona? @relation(fields: [personaId], references: [id])
   
   offers        ScrapedOffer[]
   
   userId        Int
+
   user          User     @relation(fields: [userId], references: [id])
 
   createdAt     DateTime @default(now())
@@ -95,4 +99,17 @@ model OfferPriceHistory {
   price     Decimal
   currency  String
   recordedAt DateTime @default(now())
+}
+
+model ExpertPersona {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  instruction String   @db.Text
+  isDefault   Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  searchConfigs SearchConfig[]
 }

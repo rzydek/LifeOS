@@ -7,6 +7,8 @@ export interface SearchConfig {
   lastRunAt?: Date;
   checkInterval: number;
   userId: number;
+  userIntent?: string;
+  personaId?: string;
 }
 
 export interface Category {
@@ -22,6 +24,14 @@ export interface Location {
   parentId?: string;
 }
 
+export interface AiReasoning {
+  score?: number;
+  pros?: string[];
+  cons?: string[];
+  market_analysis?: string;
+  summary?: { en?: string; pl?: string };
+}
+
 export interface ScrapedOffer {
   id: string;
   externalId: string;
@@ -34,7 +44,7 @@ export interface ScrapedOffer {
   lastSeenAt: Date;
   isActive: boolean;
   aiScore: number;
-  aiReasoning?: { en?: string; pl?: string } | string;
+  aiReasoning?: AiReasoning | string;
   priceHistory: OfferPriceHistory[];
 }
 
