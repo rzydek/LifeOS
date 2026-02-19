@@ -51,7 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Category: 'Category',
+  Location: 'Location',
+  SearchConfig: 'SearchConfig',
+  ScrapedOffer: 'ScrapedOffer',
+  OfferPriceHistory: 'OfferPriceHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -80,6 +85,71 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  parentId: 'parentId'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const LocationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  parentId: 'parentId'
+} as const
+
+export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
+
+
+export const SearchConfigScalarFieldEnum = {
+  id: 'id',
+  query: 'query',
+  categoryId: 'categoryId',
+  locationId: 'locationId',
+  radius: 'radius',
+  isActive: 'isActive',
+  lastRunAt: 'lastRunAt',
+  checkInterval: 'checkInterval',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SearchConfigScalarFieldEnum = (typeof SearchConfigScalarFieldEnum)[keyof typeof SearchConfigScalarFieldEnum]
+
+
+export const ScrapedOfferScalarFieldEnum = {
+  id: 'id',
+  externalId: 'externalId',
+  searchConfigId: 'searchConfigId',
+  title: 'title',
+  url: 'url',
+  thumbnailUrl: 'thumbnailUrl',
+  description: 'description',
+  detectedAt: 'detectedAt',
+  lastSeenAt: 'lastSeenAt',
+  isActive: 'isActive',
+  aiScore: 'aiScore',
+  aiReasoning: 'aiReasoning'
+} as const
+
+export type ScrapedOfferScalarFieldEnum = (typeof ScrapedOfferScalarFieldEnum)[keyof typeof ScrapedOfferScalarFieldEnum]
+
+
+export const OfferPriceHistoryScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  price: 'price',
+  currency: 'currency',
+  recordedAt: 'recordedAt'
+} as const
+
+export type OfferPriceHistoryScalarFieldEnum = (typeof OfferPriceHistoryScalarFieldEnum)[keyof typeof OfferPriceHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

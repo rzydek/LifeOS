@@ -12,4 +12,8 @@ openai
 pydantic
 python-dotenv
 aiohttp
+sqlalchemy
+psycopg2-binary
+langchain-community
+langchain-core
 

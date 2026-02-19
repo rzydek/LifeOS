@@ -1,0 +1,20 @@
+
+<div class="h-full flex flex-col p-6 bg-background min-h-screen">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">Parts Sniper</h1>
+    <p class="text-muted-foreground mt-2">Automated OLX market monitoring and deal analysis.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Sidebar: Configurations -->
+    <div class="lg:col-span-3 sticky top-6">
+      <lifeos-search-config class="block w-full max-h-[calc(100vh-100px)]"></lifeos-search-config>
+    </div>
+
+    <!-- Main Content: Results -->
+    <div class="lg:col-span-9">
+      <lifeos-results-grid class="block w-full"></lifeos-results-grid>
+    </div>
+  </div>
+</div>
+

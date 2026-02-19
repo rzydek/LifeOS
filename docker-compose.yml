@@ -74,6 +74,7 @@ services:
       - DATABASE_URL=${DATABASE_URL:-postgresql://lifeos:lifeos_password@postgres:5432/lifeos_db}
       - REDIS_HOST=${REDIS_HOST:-redis}
       - REDIS_PORT=${REDIS_PORT:-6379}
+      - JWT_SECRET=${JWT_SECRET:-supersecretkey}
     depends_on:
       - postgres
       - redis
@@ -102,6 +103,7 @@ services:
       dockerfile: Dockerfile
     container_name: lifeos-py-worker
     environment:
+      - DATABASE_URL=${DATABASE_URL:-postgresql://lifeos:lifeos_password@postgres:5432/lifeos_db}
       - REDIS_HOST=${REDIS_HOST:-redis}
       - QDRANT_HOST=${QDRANT_HOST:-qdrant}
       - OLLAMA_HOST=${OLLAMA_HOST:-http://ollama:11434}

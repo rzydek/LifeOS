@@ -14,4 +14,81 @@ model User {
   name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  searchConfigs SearchConfig[]
+}
+
+model Category {
+  id        String   @id // OLX ID manually input by user
+  name      String
+  parentId  String?
+  parent    Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children  Category[] @relation("CategoryHierarchy")
+  searches  SearchConfig[]
+}
+
+model Location {
+  id        String   @id // OLX ID manually input
+  name      String
+  type      String   // 'city' or 'region'
+  parentId  String?
+  parent    Location? @relation("LocationHierarchy", fields: [parentId], references: [id])
+  children  Location[] @relation("LocationHierarchy")
+  searches  SearchConfig[]
+}
+
+model SearchConfig {
+  id            String   @id @default(uuid())
+  query         String
+  categoryId    String?
+  
+  category      Category? @relation(fields: [categoryId], references: [id])
+  locationId    String?
+  location      Location? @relation(fields: [locationId], references: [id])
+  radius        Int      @default(0) // Distance in km: 0, 2, 5, 10, 15, 30, 50, 75, 100
+  
+  isActive      Boolean  @default(true) // Should be active by default
+  lastRunAt     DateTime?
+  checkInterval Int      @default(3600) // seconds (e.g., 1 hour)
+  
+  offers        ScrapedOffer[]
+  
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ScrapedOffer {
+  id            String   @id @default(uuid())
+  externalId    String   // Unique ID from OLX
+  searchConfigId String
+  searchConfig  SearchConfig @relation(fields: [searchConfigId], references: [id])
+  
+  title         String
+  url           String
+  thumbnailUrl  String?
+  description   String?
+  
+  detectedAt    DateTime @default(now())
+  lastSeenAt    DateTime @default(now())
+  isActive      Boolean  @default(true) // If not seen in recent scrapes, set false
+  
+  priceHistory  OfferPriceHistory[]
+
+  // AI Analysis
+  aiScore       Int?     // 0-100
+  aiReasoning   String?
+
+  @@unique([externalId, searchConfigId])
+}
+
+model OfferPriceHistory {
+  id        String   @id @default(uuid())
+  offerId   String
+  offer     ScrapedOffer @relation(fields: [offerId], references: [id])
+  
+  price     Decimal
+  currency  String
+  recordedAt DateTime @default(now())
 }
