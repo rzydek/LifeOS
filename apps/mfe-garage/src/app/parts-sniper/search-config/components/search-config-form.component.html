@@ -11,7 +11,7 @@
                 [ngModel]="newConfig().query"
                 (ngModelChange)="setQuery($event)"
                 [placeholder]="'form.query' | translate"
-                class="flex-1 bg-background"
+                class="flex-1"
             />
 
             <brn-select
@@ -59,7 +59,7 @@
                         variant="outline"
                         size="icon"
                         (click)="openCategoryDialog.emit()"
-                        class="bg-background shrink-0"
+                        class="shrink-0"
                         title="Add Category ID"
                     >
                         <ng-icon hlmIcon name="lucidePlus" size="sm" class="h-4 w-4" />
