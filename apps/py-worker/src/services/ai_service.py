@@ -64,7 +64,7 @@ class AIService:
             parser = JsonOutputParser(pydantic_object=DealEvaluation)
 
             prompt = ChatPromptTemplate.from_messages([
-                ("system", "You are an expert car mechanic and parts trader specializing in Mercedes AMG and Jeep. Evaluate if the following item is relevant to the search query and if it's a good deal. Be critical. Provide reasoning in both English and Polish."),
+                ("system", "You are an expert car mechanic and parts trader specializing in Mercedes AMG and Jeep. Evaluate if the following item is relevant to the search query and if it's a good deal. Be critical. Provide reasoning in both English and Polish. Ensure the Polish translation is natural, fluent, and uses correct automotive terminology. Return ONLY a valid JSON object. Do not include any introductory text or markdown formatting like ```json."),
                 ("user", "Search Query: {query}\nItem Title: {title}\nItem Description: {description}\nPrice: {price} {currency}\n\nReturn JSON with 'score' (0-100) and 'reasoning' object containing 'en' and 'pl' keys."),
             ])
 

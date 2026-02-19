@@ -45,3 +45,5 @@ Thumbs.db
 
 vitest.config.*.timestamp*
 .env
+
+**/__pycache__

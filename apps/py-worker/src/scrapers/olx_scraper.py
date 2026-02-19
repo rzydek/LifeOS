@@ -25,6 +25,7 @@ class OlxScraper(BaseScraper):
           data {
             id
             title
+            description
             url
             created_time
             last_refresh_time
@@ -154,6 +155,7 @@ class OlxScraper(BaseScraper):
             results.append({
                 "id": item.get("id"),
                 "title": item.get("title"),
+                "description": item.get("description"),
                 "url": item.get("url"),
                 "location": item.get("location", {}).get("city", {}).get("name"),
                 "price": price_val,

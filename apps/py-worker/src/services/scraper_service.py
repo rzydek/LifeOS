@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from uuid import uuid4
 from sqlalchemy.orm import Session
@@ -66,9 +67,12 @@ class ScraperService:
 
                 current_price_float = float(raw_price) if raw_price is not None else None
 
+                print(f"Processing listing: {item_title} (Description: {item_description}) - Existing offer: {'Yes' if existing_offer else 'No'}")
                 if existing_offer:
                     existing_offer.lastSeenAt = datetime.utcnow()
                     existing_offer.isActive = True
+                    if not existing_offer.description and item_description:
+                         existing_offer.description = item_description
                     
                     latest_history = session.query(OfferPriceHistory).filter(
                         OfferPriceHistory.offerId == existing_offer.id
@@ -86,7 +90,7 @@ class ScraperService:
                         score, reasoning = ai_service.evaluate_offer(query_text, item_title, item_description, raw_price, currency)
                         if score is not None:
                             existing_offer.aiScore = score
-                            existing_offer.aiReasoning = reasoning
+                            existing_offer.aiReasoning = json.dumps(reasoning) if reasoning else None
 
                     if price_changed and current_price_float is not None:
                         logger.info(f"Price change detected for {item_title}: {current_price_float} {currency}")
@@ -111,12 +115,12 @@ class ScraperService:
                         title=item_title,
                         url=item_url,
                         thumbnailUrl=item.get('thumbnail'), 
-                        description=None,
+                        description=item_description,
                         isActive=True,
                         detectedAt=datetime.utcnow(),
                         lastSeenAt=datetime.utcnow(),
                         aiScore=score,
-                        aiReasoning=reasoning
+                        aiReasoning=json.dumps(reasoning) if reasoning else None
                     )
                     session.add(new_offer)
                     
